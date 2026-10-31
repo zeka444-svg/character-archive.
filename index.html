@@ -4,156 +4,550 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHARACTER DATABASE</title>
+<title>LULU ARCHIVE</title>
+
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#08090e;color:white;
- font-family:Arial,sans-serif;padding:20px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-header{text-align:center;margin:20px 0 30px}
-header h1{color:#00f7ff;letter-spacing:4px}
-header p{color:#777}
-.menu{
- display:grid;grid-template-columns:1fr 1fr;gap:13px;
+
+body {
+    min-height: 100vh;
+    background: #05050b;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
-.card{
- background:#141722;border:1px solid #30394b;
- border-radius:16px;padding:20px 12px;
- text-align:center;cursor:pointer;
- transition:.2s;
+
+#particles, #comets {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
-.card:active{transform:scale(.96)}
-.card h2{margin:8px 0;color:#00f7ff}
-.card p{color:#999;font-size:12px}
-.emoji{font-size:43px}
-#details{
- display:none;margin-top:20px;padding:22px;
- background:#171c29;border:1px solid #00f7ff;
- border-radius:16px;
+
+#particles {
+    z-index: 0;
 }
-#details h2{color:#00f7ff}
-.stat{margin:15px 0}
-.bar{height:9px;background:#333;border-radius:10px;overflow:hidden}
-.fill{height:100%;background:#00f7ff}
-button{
- margin-top:15px;padding:12px 20px;
- border:0;border-radius:9px;background:#00eaff;
- font-weight:bold;cursor:pointer;
+
+#comets {
+    z-index: 1;
 }
-footer{text-align:center;color:#555;margin-top:35px;font-size:11px}
+
+.glow {
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: .22;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.glow.one {
+    background: #712cff;
+    top: 5%;
+    left: -150px;
+}
+
+.glow.two {
+    background: #00c8ff;
+    right: -150px;
+    bottom: 5%;
+}
+
+main {
+    position: relative;
+    z-index: 2;
+    width: min(1100px, 92%);
+    margin: auto;
+    padding: 35px 0 50px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+header h1 {
+    font-size: clamp(30px, 7vw, 55px);
+    letter-spacing: 5px;
+    color: #fff;
+    text-shadow: 0 0 15px #8d43ff, 0 0 35px #6524ff;
+}
+
+header p {
+    color: #9d9db5;
+    margin-top: 12px;
+    letter-spacing: 3px;
+    font-size: 12px;
+}
+
+.search {
+    display: block;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    padding: 15px 20px;
+    border: 1px solid #573b88;
+    border-radius: 14px;
+    background: #11101cdd;
+    color: white;
+    outline: none;
+    font-size: 15px;
+    box-shadow: 0 0 20px #602cff22;
+}
+
+.search:focus {
+    border-color: #a56aff;
+    box-shadow: 0 0 20px #873dff55;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.character {
+    position: relative;
+    overflow: hidden;
+    padding: 22px;
+    min-height: 175px;
+    background: linear-gradient(145deg, #171528ee, #0b0b14ee);
+    border: 1px solid #40305f;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.character:hover {
+    transform: translateY(-6px);
+    border-color: #a46aff;
+    box-shadow: 0 0 25px #813bff44;
+}
+
+.character h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.character p {
+    color: #aaa8c0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #823cff22;
+    color: #c5a3ff;
+    font-size: 11px;
+}
+
+.details {
+    display: none;
+    margin-top: 25px;
+    padding: 25px;
+    background: #11101cee;
+    border: 1px solid #7544b9;
+    border-radius: 18px;
+    box-shadow: 0 0 30px #742dff22;
+    animation: appear .3s ease;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.details h2 {
+    font-size: 25px;
+    margin-bottom: 12px;
+    color: #d7baff;
+}
+
+.description {
+    color: #b8b5ca;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.stat {
+    margin: 17px 0;
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.stat-top span:last-child {
+    color: #c59cff;
+}
+
+.bar {
+    height: 8px;
+    background: #29243b;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    width: 0;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #702cff, #38dfff);
+    box-shadow: 0 0 12px #823cff;
+    transition: width 1s ease;
+}
+
+.close {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #702cff33;
+    color: white;
+    border: 1px solid #8750d8;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.close:hover {
+    background: #702cff77;
+}
+
+footer {
+    text-align: center;
+    color: #65617a;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-top: 45px;
+}
+
+@media(max-width: 500px) {
+    main { padding-top: 25px; }
+    .cards { grid-template-columns: 1fr; }
+    .character { min-height: 145px; }
+}
 </style>
 </head>
+
 <body>
 
-<header>
-<h1>CLASSIFIED DATABASE</h1>
-<p>АРХИВ ПЕРСОНАЖЕЙ // 4 ОБЪЕКТА</p>
-</header>
+<canvas id="particles"></canvas>
+<canvas id="comets"></canvas>
 
-<div class="menu">
- <div class="card" onclick="showCharacter('sonya')">
-  <div class="emoji">👹</div>
-  <h2>СОНЯ</h2>
-  <p>ОПАСНОСТЬ: 10/10</p>
- </div>
+<div class="glow one"></div>
+<div class="glow two"></div>
 
- <div class="card" onclick="showCharacter('kira')">
-  <div class="emoji">🦊</div>
-  <h2>КИРА</h2>
-  <p>СКОРОСТЬ: 95</p>
- </div>
+<main>
+    <header>
+        <h1>LULU ARCHIVE</h1>
+        <p>СЕКРЕТНЫЙ АРХИВ ОБЪЕКТОВ</p>
+    </header>
 
- <div class="card" onclick="showCharacter('maxim')">
-  <div class="emoji">🦾</div>
-  <h2>МАКСИМ</h2>
-  <p>СИЛА: 150</p>
- </div>
+    <input
+        class="search"
+        id="search"
+        type="text"
+        placeholder="Поиск персонажа..."
+        oninput="searchCharacters()"
+    >
 
- <div class="card" onclick="showCharacter('sous')">
-  <div class="emoji">🧪</div>
-  <h2>СОУС</h2>
-  <p>СЕКРЕТНОСТЬ: 99%</p>
- </div>
-</div>
+    <div class="cards" id="cards"></div>
 
-<div id="details">
- <h2 id="name"></h2>
- <p id="description"></p>
- <div id="stats"></div>
- <button onclick="closeMenu()">ЗАКРЫТЬ</button>
-</div>
+    <section class="details" id="details">
+        <h2 id="detailName"></h2>
+        <p class="description" id="detailDesc"></p>
+        <div id="stats"></div>
+        <button class="close" onclick="closeMenu()">ЗАКРЫТЬ</button>
+    </section>
+
+    <footer>LULU ARCHIVE SYSTEM // VERSION 3.0</footer>
+</main>
 
 <script>
-const data={
- sonya:{
-  name:"👹 СОНЯ — ТЯЖЁЛЫЙ ТАНК",
-  desc:"Самый опасный объект. Как задавит — ахуеть можно, а так норм.",
-  stats:[
-   ["Опасность",10],
-   ["Танк",200],
-   ["Сила подрочить",1000],
-   ["Страх",100],
-   ["Скорость",3]
-  ]
- },
- kira:{
-  name:"🦊 КИРА — БЫСТРЫЙ ОБЪЕКТ",
-  desc:"Очень быстрая. Умеет неожиданно появляться.",
-  stats:[
-   ["Опасность",7],
-   ["Скорость",95],
-   ["Ловкость",100],
-   ["Защита",45]
-  ]
- },
- maxim:{
-  name:"🦾 МАКСИМ — БОРЕЦ",
-  desc:"Мощный защитник. Практически не отступает.",
-  stats:[
-   ["Опасность",8],
-   ["Сила",150],
-   ["Броня",0,"нету"],
-   ["Скорость",35]
-  ]
- },
- sous:{
-  name:"🧪 СОУС — НЕИЗВЕСТНЫЙ",
-  desc:"Загадочный объект. Любит леопардовую кофту.",
-  stats:[
-   ["Опасность",9],
-   ["Секретность",99],
-   ["Интеллект",100],
-   ["Хаос",88]
-  ]
- }
-};
+const characters = [
+    {
+        id: 1,
+        name: "👹 СОНЯ — ТЯЖЁЛЫЙ ТАНК",
+        short: "Самый опасный объект архива.",
+        desc: "Самый опасный объект как задавит масой ахуеть можно а так норм.",
+        stats: [
+            ["Опасность", 10],
+            ["Танк", 200],
+            ["Сила подрочить", 1000],
+            ["Страх", 100],
+            ["Скорость", 3]
+        ]
+    },
+    {
+        id: 2,
+        name: "🦊 КИРА — БЫСТРЫЙ ОБЪЕКТ",
+        short: "Очень быстрая и ловкая.",
+        desc: "Очень быстрая. Умеет дрочить со скоростью звука и неожиданно появляться.",
+        stats: [
+            ["Опасность", 7],
+            ["Скорость", 95],
+            ["Ловкость рук для дрочки", 100],
+            ["Защита", 45]
+        ]
+    },
+    {
+        id: 3,
+        name: "🦾 МАКСИМ — БОРЕЦ",
+        short: "Мощный защитник.",
+        desc: "Мощный защитник. Практически не отступает ТОЛЬКО КОГДА ДУШАТ.",
+        stats: [
+            ["Опасность", 8],
+            ["Сила посасати", 150],
+            ["Броня", 0, "нету"],
+            ["Скорость", 35]
+        ]
+    },
+    {
+        id: 4,
+        name: "🧪 СОУС — НЕИЗВЕСТНЫЙ",
+        short: "Загадочный объект.",
+        desc: "Загадочный объект. Его способности жестко одеваться в леопардовую кофту.",
+        stats: [
+            ["Опасность", 9],
+            ["Секретность", 99],
+            ["Интеллект", 100],
+            ["Хаос", 88]
+        ]
+    }
+];
 
-function showCharacter(id){
- const x=data[id];
- if(!x)return;
+const cards = document.getElementById("cards");
 
- document.getElementById("name").textContent=x.name;
- document.getElementById("description").textContent=x.desc;
+function renderCards(list = characters) {
+    cards.innerHTML = "";
 
- document.getElementById("stats").innerHTML=x.stats.map(s=>
-  `<div class="stat">
-    ${s[0]}: ${s[2] ?? s[1]}
-    <div class="bar">
-     <div class="fill" style="width:${Math.min(Number(s[1])||0,100)}%"></div>
-    </div>
-   </div>`
- ).join("");
+    list.forEach(character => {
+        const card = document.createElement("div");
+        card.className = "character";
 
- document.getElementById("details").style.display="block";
- document.getElementById("details").scrollIntoView({behavior:"smooth"});
+        const title = document.createElement("h2");
+        title.textContent = character.name;
+
+        const description = document.createElement("p");
+        description.textContent = character.short;
+
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = "ОТКРЫТЬ ДОСЬЕ";
+
+        card.append(title, description, tag);
+        card.onclick = () => showCharacter(character.id);
+
+        cards.appendChild(card);
+    });
 }
 
-function closeMenu(){
- document.getElementById("details").style.display="none";
+function showCharacter(id) {
+    const character = characters.find(item => item.id === id);
+    if (!character) return;
+
+    document.getElementById("detailName").textContent = character.name;
+    document.getElementById("detailDesc").textContent = character.desc;
+
+    const stats = document.getElementById("stats");
+    stats.innerHTML = "";
+
+    character.stats.forEach(stat => {
+        const value = stat[1];
+        const row = document.createElement("div");
+        row.className = "stat";
+
+        const top = document.createElement("div");
+        top.className = "stat-top";
+
+        const label = document.createElement("span");
+        label.textContent = stat[0];
+
+        const number = document.createElement("span");
+        number.textContent = stat[2] || value;
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+
+        const fill = document.createElement("div");
+        fill.className = "fill";
+        fill.style.width = "0%";
+
+        bar.appendChild(fill);
+        top.append(label, number);
+        row.append(top, bar);
+        stats.appendChild(row);
+
+        requestAnimationFrame(() => {
+            fill.style.width = Math.min(Math.max(value, 0), 100) + "%";
+        });
+    });
+
+    const panel = document.getElementById("details");
+    panel.style.display = "block";
+    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
+
+function closeMenu() {
+    document.getElementById("details").style.display = "none";
+}
+
+function searchCharacters() {
+    const query = document.getElementById("search").value.toLowerCase();
+
+    renderCards(characters.filter(character =>
+        character.name.toLowerCase().includes(query) ||
+        character.short.toLowerCase().includes(query) ||
+        character.desc.toLowerCase().includes(query)
+    ));
+}
+
+renderCards();
+
+
+// ФОН: СВЕТЯЩИЕСЯ ЧАСТИЦЫ
+
+const particleCanvas = document.getElementById("particles");
+const pctx = particleCanvas.getContext("2d");
+
+let particles = [];
+
+function resizeParticleCanvas() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    particleCanvas.width = innerWidth * dpr;
+    particleCanvas.height = innerHeight * dpr;
+    pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function createParticle() {
+    return {
+        x: Math.random() * innerWidth,
+        y: Math.random() * innerHeight,
+        size: Math.random() * 2 + 0.5,
+        speed: Math.random() * 0.5 + 0.15,
+        alpha: Math.random() * 0.6 + 0.2
+    };
+}
+
+for (let i = 0; i < 65; i++) {
+    particles.push(createParticle());
+}
+
+function animateParticles() {
+    pctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    particles.forEach(p => {
+        pctx.beginPath();
+        pctx.fillStyle = `rgba(150,190,255,${p.alpha})`;
+        pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        pctx.fill();
+
+        p.y -= p.speed;
+
+        if (p.y < 0) {
+            p.y = innerHeight;
+            p.x = Math.random() * innerWidth;
+        }
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+
+
+// ФОН: ЛЕТЯЩИЕ КОМЕТЫ
+
+const cometCanvas = document.getElementById("comets");
+const cctx = cometCanvas.getContext("2d");
+
+let comets = [];
+
+function resizeCometCanvas() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    cometCanvas.width = innerWidth * dpr;
+    cometCanvas.height = innerHeight * dpr;
+    cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function createComet() {
+    return {
+        x: Math.random() * (innerWidth + 300),
+        y: Math.random() * (innerHeight * 0.7) - 100,
+        speed: Math.random() * 4 + 3,
+        length: Math.random() * 110 + 70,
+        size: Math.random() * 1.5 + 1,
+        alpha: Math.random() * 0.5 + 0.5
+    };
+}
+
+for (let i = 0; i < 7; i++) {
+    comets.push(createComet());
+}
+
+function animateComets() {
+    cctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    comets.forEach((comet, index) => {
+        const tailX = comet.x + comet.length;
+        const tailY = comet.y - comet.length * 0.5;
+
+        const gradient = cctx.createLinearGradient(
+            comet.x, comet.y, tailX, tailY
+        );
+
+        gradient.addColorStop(0, `rgba(130,225,255,${comet.alpha})`);
+        gradient.addColorStop(1, "rgba(130,225,255,0)");
+
+        cctx.beginPath();
+        cctx.strokeStyle = gradient;
+        cctx.lineWidth = comet.size;
+        cctx.moveTo(comet.x, comet.y);
+        cctx.lineTo(tailX, tailY);
+        cctx.stroke();
+
+        cctx.beginPath();
+        cctx.fillStyle = `rgba(220,250,255,${comet.alpha})`;
+        cctx.shadowBlur = 18;
+        cctx.shadowColor = "#55ddff";
+        cctx.arc(comet.x, comet.y, comet.size * 1.5, 0, Math.PI * 2);
+        cctx.fill();
+        cctx.shadowBlur = 0;
+
+        comet.x -= comet.speed;
+        comet.y += comet.speed * 0.5;
+
+        if (comet.x < -200 || comet.y > innerHeight + 100) {
+            comets[index] = createComet();
+        }
+    });
+
+    requestAnimationFrame(animateComets);
+}
+
+function resizeAll() {
+    resizeParticleCanvas();
+    resizeCometCanvas();
+}
+
+addEventListener("resize", resizeAll);
+
+resizeAll();
+animateParticles();
+animateComets();
 </script>
 
-<footer>ARCHIVE SYSTEM v1.0 // LULU</footer>
 </body>
-</html>
+ </html>
+ 
