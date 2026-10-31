@@ -39,7 +39,7 @@ header p{color:#777}
 button{
  margin-top:15px;padding:12px 20px;
  border:0;border-radius:9px;background:#00eaff;
- font-weight:bold;
+ font-weight:bold;cursor:pointer;
 }
 footer{text-align:center;color:#555;margin-top:35px;font-size:11px}
 </style>
@@ -52,25 +52,25 @@ footer{text-align:center;color:#555;margin-top:35px;font-size:11px}
 </header>
 
 <div class="menu">
- <div class="card" onclick="show('sonya')">
+ <div class="card" onclick="showCharacter('sonya')">
   <div class="emoji">👹</div>
   <h2>СОНЯ</h2>
   <p>ОПАСНОСТЬ: 10/10</p>
  </div>
 
- <div class="card" onclick="show('kira')">
+ <div class="card" onclick="showCharacter('kira')">
   <div class="emoji">🦊</div>
   <h2>КИРА</h2>
   <p>СКОРОСТЬ: 95</p>
  </div>
 
- <div class="card" onclick="show('maxim')">
+ <div class="card" onclick="showCharacter('maxim')">
   <div class="emoji">🦾</div>
   <h2>МАКСИМ</h2>
   <p>СИЛА: 150</p>
  </div>
 
- <div class="card" onclick="show('sous')">
+ <div class="card" onclick="showCharacter('sous')">
   <div class="emoji">🧪</div>
   <h2>СОУС</h2>
   <p>СЕКРЕТНОСТЬ: 99%</p>
@@ -88,38 +88,67 @@ footer{text-align:center;color:#555;margin-top:35px;font-size:11px}
 const data={
  sonya:{
   name:"👹 СОНЯ — ТЯЖЁЛЫЙ ТАНК",
-  desc:"Самый опасный объект как задавит масой ахуеть можно а так норм.",
-  stats:[["Опасность",10],["Танк",200],["Сила подрочить",1000],["Страх",100],["Скорость",3]]
+  desc:"Самый опасный объект. Как задавит — ахуеть можно, а так норм.",
+  stats:[
+   ["Опасность",10],
+   ["Танк",200],
+   ["Сила подрочить",1000],
+   ["Страх",100],
+   ["Скорость",3]
+  ]
  },
  kira:{
   name:"🦊 КИРА — БЫСТРЫЙ ОБЪЕКТ",
-  desc:"Очень быстрая. Умеет дрочить со скоростью звука и неожиданно появляться.",
-  stats:[["Опасность",7],["Скорость",95],["Ловкость рук для дрочки",100],["Защита",45]]
+  desc:"Очень быстрая. Умеет неожиданно появляться.",
+  stats:[
+   ["Опасность",7],
+   ["Скорость",95],
+   ["Ловкость",100],
+   ["Защита",45]
+  ]
  },
  maxim:{
   name:"🦾 МАКСИМ — БОРЕЦ",
-  desc:"Мощный защитник. Практически не отступает ТОЛЬКО КОГДА ДУШАТ.",
-  stats:[["Опасность",8],["Сила посасати",150],["Броня",нету],["Скорость",35]]
+  desc:"Мощный защитник. Практически не отступает.",
+  stats:[
+   ["Опасность",8],
+   ["Сила",150],
+   ["Броня",0,"нету"],
+   ["Скорость",35]
+  ]
  },
  sous:{
   name:"🧪 СОУС — НЕИЗВЕСТНЫЙ",
-  desc:"Загадочный объект. Его способности жестко одеваться в леопардовую кофту.",
-  stats:[["Опасность",9],["Секретность",99],["Интеллект",100],["Хаос",88]]
+  desc:"Загадочный объект. Любит леопардовую кофту.",
+  stats:[
+   ["Опасность",9],
+   ["Секретность",99],
+   ["Интеллект",100],
+   ["Хаос",88]
+  ]
  }
 };
 
-function show(id){
+function showCharacter(id){
  const x=data[id];
+ if(!x)return;
+
  document.getElementById("name").textContent=x.name;
  document.getElementById("description").textContent=x.desc;
+
  document.getElementById("stats").innerHTML=x.stats.map(s=>
- `<div class="stat">${s[0]}: ${s[1]}<div class="bar">
- <div class="fill" style="width:${Math.min(s[1],100)}%"></div>
- </div></div>`
+  `<div class="stat">
+    ${s[0]}: ${s[2] ?? s[1]}
+    <div class="bar">
+     <div class="fill" style="width:${Math.min(Number(s[1])||0,100)}%"></div>
+    </div>
+   </div>`
  ).join("");
+
  document.getElementById("details").style.display="block";
  document.getElementById("details").scrollIntoView({behavior:"smooth"});
 }
+
 function closeMenu(){
  document.getElementById("details").style.display="none";
 }
