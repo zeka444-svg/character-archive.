@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARACTER DATABASE</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#08090e;color:white;
+ font-family:Arial,sans-serif;padding:20px;
+}
+header{text-align:center;margin:20px 0 30px}
+header h1{color:#00f7ff;letter-spacing:4px}
+header p{color:#777}
+.menu{
+ display:grid;grid-template-columns:1fr 1fr;gap:13px;
+}
+.card{
+ background:#141722;border:1px solid #30394b;
+ border-radius:16px;padding:20px 12px;
+ text-align:center;cursor:pointer;
+ transition:.2s;
+}
+.card:active{transform:scale(.96)}
+.card h2{margin:8px 0;color:#00f7ff}
+.card p{color:#999;font-size:12px}
+.emoji{font-size:43px}
+#details{
+ display:none;margin-top:20px;padding:22px;
+ background:#171c29;border:1px solid #00f7ff;
+ border-radius:16px;
+}
+#details h2{color:#00f7ff}
+.stat{margin:15px 0}
+.bar{height:9px;background:#333;border-radius:10px;overflow:hidden}
+.fill{height:100%;background:#00f7ff}
+button{
+ margin-top:15px;padding:12px 20px;
+ border:0;border-radius:9px;background:#00eaff;
+ font-weight:bold;
+}
+footer{text-align:center;color:#555;margin-top:35px;font-size:11px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>CLASSIFIED DATABASE</h1>
+<p>АРХИВ ПЕРСОНАЖЕЙ // 4 ОБЪЕКТА</p>
+</header>
+
+<div class="menu">
+ <div class="card" onclick="show('sonya')">
+  <div class="emoji">👹</div>
+  <h2>СОНЯ</h2>
+  <p>ОПАСНОСТЬ: 10/10</p>
+ </div>
+
+ <div class="card" onclick="show('kira')">
+  <div class="emoji">🦊</div>
+  <h2>КИРА</h2>
+  <p>СКОРОСТЬ: 95</p>
+ </div>
+
+ <div class="card" onclick="show('maxim')">
+  <div class="emoji">🦾</div>
+  <h2>МАКСИМ</h2>
+  <p>СИЛА: 150</p>
+ </div>
+
+ <div class="card" onclick="show('sous')">
+  <div class="emoji">🧪</div>
+  <h2>СОУС</h2>
+  <p>СЕКРЕТНОСТЬ: 99%</p>
+ </div>
+</div>
+
+<div id="details">
+ <h2 id="name"></h2>
+ <p id="description"></p>
+ <div id="stats"></div>
+ <button onclick="closeMenu()">ЗАКРЫТЬ</button>
+</div>
+
+<script>
+const data={
+ sonya:{
+  name:"👹 СОНЯ — ТЯЖЁЛЫЙ ТАНК",
+  desc:"Самый опасный объект архива. Огромная сила и почти непробиваемая защита.",
+  stats:[["Опасность",10],["Танк",200],["Сила подрочить",1000],["Страх",100],["Скорость",3]]
+ },
+ kira:{
+  name:"🦊 КИРА — БЫСТРЫЙ ОБЪЕКТ",
+  desc:"Очень быстрая. Умеет исчезать и неожиданно появляться.",
+  stats:[["Опасность",7],["Скорость",95],["Ловкость",100],["Защита",45]]
+ },
+ maxim:{
+  name:"🦾 МАКСИМ — БРОНЕНОСЕЦ",
+  desc:"Мощный защитник. Практически не отступает.",
+  stats:[["Опасность",8],["Сила",150],["Броня",120],["Скорость",35]]
+ },
+ sous:{
+  name:"🧪 СОУС — НЕИЗВЕСТНЫЙ",
+  desc:"Загадочный объект. Его способности жестко одеваться в леопардовую кофту.",
+  stats:[["Опасность",9],["Секретность",99],["Интеллект",100],["Хаос",88]]
+ }
+};
+
+function show(id){
+ const x=data[id];
+ document.getElementById("name").textContent=x.name;
+ document.getElementById("description").textContent=x.desc;
+ document.getElementById("stats").innerHTML=x.stats.map(s=>
+ `<div class="stat">${s[0]}: ${s[1]}<div class="bar">
+ <div class="fill" style="width:${Math.min(s[1],100)}%"></div>
+ </div></div>`
+ ).join("");
+ document.getElementById("details").style.display="block";
+ document.getElementById("details").scrollIntoView({behavior:"smooth"});
+}
+function closeMenu(){
+ document.getElementById("details").style.display="none";
+}
+</script>
+
+<footer>ARCHIVE SYSTEM v1.0 // LULU</footer>
+</body>
+</html>
