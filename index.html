@@ -9,558 +9,457 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 :root{
-  --bg:#05050b;
-  --panel:rgba(13,13,28,.88);
-  --panel2:rgba(19,17,39,.88);
-  --line:rgba(153,91,255,.28);
-  --accent:#a855f7;
-  --accent2:#36d9ff;
-  --text:#f5f1ff;
-  --muted:#89849e;
+  --bg:#05050b;--panel:rgba(13,13,28,.88);
+  --line:rgba(153,91,255,.28);--accent:#a855f7;
+  --accent2:#36d9ff;--text:#f5f1ff;--muted:#89849e;
   --glow:0 0 25px rgba(168,85,247,.35);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;
-  min-height:100vh;
-  color:var(--text);
-  background:var(--bg);
-  font-family:'Rajdhani',Arial,sans-serif;
-  overflow-x:hidden;
-}
+body{margin:0;min-height:100vh;color:var(--text);background:var(--bg);font-family:'Rajdhani',Arial,sans-serif;overflow-x:hidden}
 button{font:inherit}
-#stars,#nebula{
-  position:fixed;inset:0;width:100%;height:100%;
-  pointer-events:none;
-}
-#nebula{z-index:0}
-#stars{z-index:1}
-.scanlines{
-  position:fixed;inset:0;z-index:2;pointer-events:none;
-  opacity:.12;
-  background:repeating-linear-gradient(
-    to bottom,transparent 0px,transparent 3px,
-    rgba(255,255,255,.045) 4px
-  );
-}
-body:after{
-  content:"";position:fixed;inset:0;z-index:2;pointer-events:none;
-  background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.65) 100%);
-}
-#loader{
-  position:fixed;inset:0;z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;
-  background:#05050b;
-  transition:opacity .7s,visibility .7s;
-}
-#loader.hide{opacity:0;visibility:hidden}
-.loader-logo{
-  font:900 clamp(35px,9vw,75px) 'Orbitron';
-  letter-spacing:8px;
-  color:white;
-  text-shadow:0 0 20px var(--accent),0 0 60px var(--accent);
-  animation:logoPulse 1.5s infinite alternate;
-}
-.loader-sub{
-  margin-top:16px;color:var(--accent2);
-  letter-spacing:7px;font:600 12px 'Orbitron';
-}
-.loader-track{
-  margin-top:38px;width:min(340px,75vw);height:5px;
-  background:#21172f;border-radius:20px;overflow:hidden;
-}
-.loader-progress{
-  height:100%;width:0%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  box-shadow:0 0 18px var(--accent);
-  animation:load 2.1s ease forwards;
-}
-.loader-status{
-  margin-top:15px;color:var(--muted);
-  font:11px 'Orbitron';letter-spacing:3px;
-}
-@keyframes load{to{width:100%}}
-@keyframes logoPulse{to{text-shadow:0 0 35px var(--accent),0 0 90px var(--accent)}}
-
-.app{
-  position:relative;z-index:3;
-  width:min(1450px,96%);
-  margin:auto;padding:22px 0 55px;
-}
-.topbar{
-  min-height:86px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:15px 24px;
-  background:rgba(10,9,21,.82);
-  border:1px solid var(--line);
-  border-radius:16px;
-  box-shadow:var(--glow);
-  backdrop-filter:blur(16px);
-}
+#stars,#nebula{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#nebula{z-index:0}#stars{z-index:1}
+.scanlines{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.12;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(255,255,255,.045) 4px)}
+body:after{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.65) 100%)}
+.app{position:relative;z-index:3;width:min(1450px,96%);margin:auto;padding:22px 0 55px}
+.topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 24px;background:rgba(10,9,21,.82);border:1px solid var(--line);border-radius:16px;box-shadow:var(--glow);backdrop-filter:blur(16px)}
 .brand{display:flex;align-items:center;gap:15px}
-.brand-mark{
-  width:52px;height:52px;border:1px solid var(--accent);
-  border-radius:13px;display:grid;place-items:center;
-  color:var(--accent2);font:900 24px 'Orbitron';
-  box-shadow:inset 0 0 20px rgba(168,85,247,.2),var(--glow);
-}
-.brand-name{
-  font:800 21px 'Orbitron';letter-spacing:3px;
-}
-.brand-caption{
-  color:var(--muted);font-size:11px;letter-spacing:3px;
-  margin-top:5px;
-}
-.system-status{
-  display:flex;align-items:center;gap:10px;
-  color:#83ffd1;font:11px 'Orbitron';letter-spacing:2px;
-}
-.status-dot{
-  width:9px;height:9px;border-radius:50%;
-  background:#50ffb2;box-shadow:0 0 15px #50ffb2;
-  animation:blink 1.3s infinite;
-}
+.brand-mark{width:52px;height:52px;border:1px solid var(--accent);border-radius:13px;display:grid;place-items:center;color:var(--accent2);font:900 24px 'Orbitron';box-shadow:inset 0 0 20px rgba(168,85,247,.2),var(--glow)}
+.brand-name{font:800 21px 'Orbitron';letter-spacing:3px}
+.brand-caption{color:var(--muted);font-size:11px;letter-spacing:3px;margin-top:5px}
+.system-status{display:flex;align-items:center;gap:10px;color:#83ffd1;font:11px 'Orbitron';letter-spacing:2px}
+.status-dot{width:9px;height:9px;border-radius:50%;background:#50ffb2;box-shadow:0 0 15px #50ffb2;animation:blink 1.3s infinite}
 @keyframes blink{50%{opacity:.3}}
-
-.hero{
-  margin:22px 0;
-  min-height:245px;
-  padding:35px clamp(20px,5vw,65px);
-  position:relative;overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:20px;
-  background:
-    linear-gradient(110deg,rgba(20,12,40,.96),rgba(9,15,34,.78)),
-    radial-gradient(circle at 80% 20%,rgba(168,85,247,.3),transparent 45%);
-  box-shadow:var(--glow);
-}
-.hero:before{
-  content:"";position:absolute;width:350px;height:350px;
-  right:-100px;top:-150px;border-radius:50%;
-  border:1px solid rgba(168,85,247,.3);
-  box-shadow:0 0 0 30px rgba(168,85,247,.035),
-             0 0 0 65px rgba(168,85,247,.025);
-}
-.hero-label{
-  color:var(--accent2);font:600 12px 'Orbitron';
-  letter-spacing:5px;
-}
-.hero h1{
-  font:900 clamp(35px,7vw,70px) 'Orbitron';
-  margin:15px 0 10px;letter-spacing:2px;
-  text-shadow:0 0 25px rgba(168,85,247,.6);
-}
+.hero{margin:22px 0;min-height:245px;padding:35px clamp(20px,5vw,65px);position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:linear-gradient(110deg,rgba(20,12,40,.96),rgba(9,15,34,.78)),radial-gradient(circle at 80% 20%,rgba(168,85,247,.3),transparent 45%);box-shadow:var(--glow)}
+.hero:before{content:"";position:absolute;width:350px;height:350px;right:-100px;top:-150px;border-radius:50%;border:1px solid rgba(168,85,247,.3);box-shadow:0 0 0 30px rgba(168,85,247,.035),0 0 0 65px rgba(168,85,247,.025)}
+.hero-label{color:var(--accent2);font:600 12px 'Orbitron';letter-spacing:5px}
+.hero h1{font:900 clamp(35px,7vw,70px) 'Orbitron';margin:15px 0 10px;letter-spacing:2px;text-shadow:0 0 25px rgba(168,85,247,.6)}
 .hero p{color:#aaa4bd;font-size:18px;margin:0;letter-spacing:1px}
-.hero-bottom{
-  display:flex;gap:12px;flex-wrap:wrap;margin-top:25px;
-}
-.btn{
-  cursor:pointer;border:1px solid var(--line);
-  color:white;background:rgba(168,85,247,.12);
-  padding:13px 22px;border-radius:9px;
-  font:700 11px 'Orbitron';letter-spacing:2px;
-  transition:.25s;position:relative;overflow:hidden;
-}
-.btn:hover{
-  border-color:var(--accent);background:rgba(168,85,247,.25);
-  box-shadow:0 0 25px rgba(168,85,247,.25);
-  transform:translateY(-2px);
-}
-.btn.primary{
-  color:#fff;border-color:var(--accent);
-  background:linear-gradient(100deg,#7027b8,#392b83);
-  box-shadow:0 0 22px rgba(168,85,247,.25);
-}
+.hero-bottom{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.btn{cursor:pointer;border:1px solid var(--line);color:white;background:rgba(168,85,247,.12);padding:13px 22px;border-radius:9px;font:700 11px 'Orbitron';letter-spacing:2px;transition:.25s}
+.btn:hover{border-color:var(--accent);background:rgba(168,85,247,.25);box-shadow:0 0 25px rgba(168,85,247,.25);transform:translateY(-2px)}
+.btn.primary{border-color:var(--accent);background:linear-gradient(100deg,#7027b8,#392b83);box-shadow:0 0 22px rgba(168,85,247,.25)}
 .btn.cyan{border-color:rgba(54,217,255,.5);color:var(--accent2)}
 .btn.danger{border-color:rgba(255,80,120,.4);color:#ff7899}
-
-.nav{
-  display:grid;grid-template-columns:repeat(6,1fr);
-  gap:10px;margin:20px 0;
-}
-.nav-btn{
-  cursor:pointer;min-height:72px;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:7px;
-  color:#a9a2bb;background:rgba(12,11,25,.85);
-  border:1px solid rgba(153,91,255,.18);
-  border-radius:12px;
-  font:700 10px 'Orbitron';letter-spacing:1px;
-  transition:.25s;
-}
+.nav{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:20px 0}
+.nav-btn{cursor:pointer;min-height:72px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;color:#a9a2bb;background:rgba(12,11,25,.85);border:1px solid rgba(153,91,255,.18);border-radius:12px;font:700 10px 'Orbitron';letter-spacing:1px;transition:.25s}
 .nav-btn .nav-icon{font-size:21px}
-.nav-btn:hover,.nav-btn.active{
-  color:white;border-color:var(--accent);
-  background:rgba(105,48,160,.22);
-  box-shadow:inset 0 0 20px rgba(168,85,247,.1),0 0 18px rgba(168,85,247,.16);
-}
-.page{
-  display:none;min-height:430px;
-  padding:clamp(18px,3vw,35px);
-  background:rgba(8,8,18,.76);
-  border:1px solid var(--line);
-  border-radius:17px;
-  backdrop-filter:blur(14px);
-  animation:pageIn .35s ease;
-}
+.nav-btn:hover,.nav-btn.active{color:white;border-color:var(--accent);background:rgba(105,48,160,.22);box-shadow:inset 0 0 20px rgba(168,85,247,.1),0 0 18px rgba(168,85,247,.16)}
+.page{display:none;min-height:430px;padding:clamp(18px,3vw,35px);background:rgba(8,8,18,.76);border:1px solid var(--line);border-radius:17px;backdrop-filter:blur(14px);animation:pageIn .35s ease}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;flex-wrap:wrap;margin-bottom:25px;
-}
-.section-title{
-  font:800 clamp(20px,4vw,29px) 'Orbitron';
-  letter-spacing:2px;margin:0;
-}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:25px}
+.section-title{font:800 clamp(20px,4vw,29px) 'Orbitron';letter-spacing:2px;margin:0}
 .section-title span{color:var(--accent2)}
 .section-tag{font:11px 'Orbitron';color:var(--muted);letter-spacing:2px}
-.grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;
-}
-.panel{
-  padding:22px;border:1px solid rgba(153,91,255,.2);
-  border-radius:13px;background:var(--panel);
-}
-.panel h3{
-  margin:0 0 12px;font:700 13px 'Orbitron';letter-spacing:1px;
-}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.panel{padding:22px;border:1px solid rgba(153,91,255,.2);border-radius:13px;background:var(--panel)}
+.panel h3{margin:0 0 12px;font:700 13px 'Orbitron';letter-spacing:1px}
 .panel p{color:#aaa5b9;line-height:1.7;margin:0}
-.profile-main{
-  display:flex;align-items:center;gap:25px;flex-wrap:wrap;
-  padding:27px;background:var(--panel);
-  border:1px solid var(--line);border-radius:15px;
-}
-.avatar{
-  width:115px;height:115px;border-radius:20px;
-  display:grid;place-items:center;
-  font:900 43px 'Orbitron';color:white;
-  border:1px solid var(--accent);
-  background:linear-gradient(135deg,#56248b,#111c42);
-  box-shadow:var(--glow);
-}
+.profile-main{display:flex;align-items:center;gap:25px;flex-wrap:wrap;padding:27px;background:var(--panel);border:1px solid var(--line);border-radius:15px}
+.avatar{width:115px;height:115px;border-radius:20px;display:grid;place-items:center;font:900 43px 'Orbitron';color:white;border:1px solid var(--accent);background:linear-gradient(135deg,#56248b,#111c42);box-shadow:var(--glow)}
 .profile-name{font:800 27px 'Orbitron';margin-bottom:8px}
 .profile-role{color:var(--accent2);letter-spacing:3px;font-size:12px}
-.stat-row{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:12px;margin-top:17px;
-}
-.stat{
-  padding:18px;text-align:center;border:1px solid var(--line);
-  background:rgba(13,12,28,.8);border-radius:12px;
-}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:17px}
+.stat{padding:18px;text-align:center;border:1px solid var(--line);background:rgba(13,12,28,.8);border-radius:12px}
 .stat strong{display:block;font:800 24px 'Orbitron';color:var(--accent2)}
 .stat span{font-size:11px;color:var(--muted);letter-spacing:2px}
-
-.gallery-grid{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;
-}
-.gallery-card{
-  min-height:170px;padding:20px;cursor:pointer;
-  display:flex;flex-direction:column;justify-content:space-between;
-  border:1px solid var(--line);border-radius:13px;
-  background:linear-gradient(145deg,rgba(40,22,68,.8),rgba(9,15,31,.9));
-  transition:.25s;
-}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.gallery-card{min-height:170px;padding:20px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,rgba(40,22,68,.8),rgba(9,15,31,.9));transition:.25s}
 .gallery-card:hover{transform:translateY(-5px);border-color:var(--accent2);box-shadow:var(--glow)}
 .gallery-symbol{font-size:35px}
 .gallery-card h3{font:700 13px 'Orbitron';letter-spacing:1px}
 .gallery-card p{margin:0;color:var(--muted);font-size:13px}
-#popup{
-  position:fixed;inset:0;z-index:500;
-  display:none;align-items:center;justify-content:center;
-  padding:20px;background:rgba(0,0,0,.8);
-}
+#popup{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.8)}
 #popup.show{display:flex}
-.popup-box{
-  width:min(480px,100%);padding:30px;
-  border:1px solid var(--accent);border-radius:16px;
-  background:#100d20;box-shadow:0 0 50px rgba(168,85,247,.3);
-}
+.popup-box{width:min(480px,100%);padding:30px;border:1px solid var(--accent);border-radius:16px;background:#100d20;box-shadow:0 0 50px rgba(168,85,247,.3)}
 .popup-box h2{font:800 22px 'Orbitron'}
 .popup-box p{color:#b5afc6;line-height:1.7}
-
-.setting-row{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;padding:17px 0;border-bottom:1px solid rgba(153,91,255,.13);
-}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 0;border-bottom:1px solid rgba(153,91,255,.13)}
 .setting-row strong{font:700 12px 'Orbitron';letter-spacing:1px}
 .setting-row small{display:block;color:var(--muted);margin-top:5px}
 .switch{width:48px;height:26px;position:relative;flex-shrink:0}
 .switch input{opacity:0;width:0;height:0}
-.switch span{
-  position:absolute;inset:0;cursor:pointer;border-radius:30px;
-  background:#343044;transition:.2s;
-}
-.switch span:before{
-  content:"";position:absolute;width:18px;height:18px;
-  left:4px;top:4px;border-radius:50%;background:#aaa;transition:.2s;
-}
+.switch span{position:absolute;inset:0;cursor:pointer;border-radius:30px;background:#343044;transition:.2s}
+.switch span:before{content:"";position:absolute;width:18px;height:18px;left:4px;top:4px;border-radius:50%;background:#aaa;transition:.2s}
 .switch input:checked+span{background:#783bb4}
 .switch input:checked+span:before{transform:translateX(22px);background:white}
-input[type=color]{
-  width:52px;height:35px;background:none;border:0;cursor:pointer;
-}
+input[type=color]{width:52px;height:35px;background:none;border:0;cursor:pointer}
 input[type=range]{accent-color:var(--accent);width:min(220px,45vw)}
-.contact-strip{
-  margin-top:20px;padding:18px 22px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;flex-wrap:wrap;
-  border:1px solid var(--line);border-radius:13px;
-  background:rgba(10,10,24,.8);
-}
+.contact-strip{margin-top:20px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border:1px solid var(--line);border-radius:13px;background:rgba(10,10,24,.8)}
 .contact-strip strong{font:700 12px 'Orbitron';letter-spacing:2px}
 .contact-strip span{color:var(--muted);font-size:13px}
-footer{
-  text-align:center;padding:27px 10px 0;
-  color:#68627c;font:10px 'Orbitron';letter-spacing:3px;
-}
-
-/* SNAKE */
-.game-layout{
-  display:grid;grid-template-columns:minmax(0,1fr) 250px;
-  gap:18px;align-items:start;
-}
-.game-board-wrap{
-  padding:15px;background:rgba(4,8,17,.9);
-  border:1px solid rgba(54,217,255,.35);
-  border-radius:15px;box-shadow:0 0 25px rgba(54,217,255,.08);
-}
-.game-topline{
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:10px;margin:0 0 13px;
-  font:11px 'Orbitron';letter-spacing:2px;
-}
+footer{text-align:center;padding:27px 10px 0;color:#68627c;font:10px 'Orbitron';letter-spacing:3px}
+.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:18px;align-items:start}
+.game-board-wrap{padding:15px;background:rgba(4,8,17,.9);border:1px solid rgba(54,217,255,.35);border-radius:15px;box-shadow:0 0 25px rgba(54,217,255,.08)}
+.game-topline{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:0 0 13px;font:11px 'Orbitron';letter-spacing:2px}
 .game-topline span{color:var(--accent2)}
-#snakeCanvas{
-  display:block;width:100%;max-width:650px;
-  aspect-ratio:1/1;margin:auto;
-  background:#050b14;border:1px solid rgba(54,217,255,.22);
-  border-radius:8px;touch-action:none;
-}
+#snakeCanvas{display:block;width:100%;max-width:650px;aspect-ratio:1/1;margin:auto;background:#050b14;border:1px solid rgba(54,217,255,.22);border-radius:8px;touch-action:none}
 .game-side{display:flex;flex-direction:column;gap:13px}
-.score-box{
-  padding:19px;background:var(--panel);
-  border:1px solid var(--line);border-radius:13px;
-}
+.score-box{padding:19px;background:var(--panel);border:1px solid var(--line);border-radius:13px}
 .score-label{font:10px 'Orbitron';letter-spacing:2px;color:var(--muted)}
 .score-number{font:900 33px 'Orbitron';color:var(--accent2);margin-top:9px}
 .game-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:15px}
-.dpad{
-  min-height:53px;border:1px solid rgba(54,217,255,.4);
-  border-radius:9px;background:rgba(54,217,255,.08);
-  color:white;font:800 19px 'Orbitron';cursor:pointer;
-  touch-action:manipulation;
-}
+.dpad{min-height:53px;border:1px solid rgba(54,217,255,.4);border-radius:9px;background:rgba(54,217,255,.08);color:white;font:800 19px 'Orbitron';cursor:pointer;touch-action:manipulation}
 .dpad:active{background:rgba(54,217,255,.3)}
-.dpad.up{grid-column:2}
-.dpad.left{grid-column:1;grid-row:2}
-.dpad.down{grid-column:2;grid-row:2}
-.dpad.right{grid-column:3;grid-row:2}
-.key-hint{
-  color:var(--muted);font-size:13px;line-height:1.7;
-}
+.dpad.up{grid-column:2}.dpad.left{grid-column:1;grid-row:2}.dpad.down{grid-column:2;grid-row:2}.dpad.right{grid-column:3;grid-row:2}
+.key-hint{color:var(--muted);font-size:13px;line-height:1.7}
 .key-hint b{color:var(--accent2)}
-.game-message{
-  color:var(--accent2);font:11px 'Orbitron';
-  letter-spacing:1px;min-height:20px;margin-top:12px;
-}
+.game-message{color:var(--accent2);font:11px 'Orbitron';letter-spacing:1px;min-height:20px;margin-top:12px}
 .game-buttons{display:flex;gap:8px;flex-wrap:wrap}
 .game-buttons .btn{flex:1;padding:13px 10px}
-@media(max-width:850px){
-  .nav{grid-template-columns:repeat(3,1fr)}
-  .game-layout{grid-template-columns:1fr}
-  .game-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .game-side .score-box:last-child{grid-column:1/-1}
-}
-@media(max-width:560px){
-  .app{width:94%;padding-top:10px}
-  .topbar{padding:13px}
-  .brand-name{font-size:16px}
-  .system-status{font-size:9px}
-  .hero{min-height:220px}
-  .nav{gap:7px}
-  .nav-btn{min-height:65px;font-size:9px}
-  .grid,.gallery-grid{grid-template-columns:1fr}
-  .stat-row{gap:7px}
-  .stat{padding:12px 5px}
-  .stat strong{font-size:19px}
-  .game-side{grid-template-columns:1fr 1fr}
-  .game-board-wrap{padding:8px}
-  .game-topline{font-size:9px}
-}
+@media(max-width:850px){.nav{grid-template-columns:repeat(3,1fr)}.game-layout{grid-template-columns:1fr}.game-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.game-side .score-box:last-child{grid-column:1/-1}}
+@media(max-width:560px){.app{width:94%;padding-top:10px}.topbar{padding:13px}.brand-name{font-size:16px}.system-status{font-size:9px}.hero{min-height:220px}.nav{gap:7px}.nav-btn{min-height:65px;font-size:9px}.grid,.gallery-grid{grid-template-columns:1fr}.stat-row{gap:7px}.stat{padding:12px 5px}.stat strong{font-size:19px}.game-side{grid-template-columns:1fr 1fr}.game-board-wrap{padding:8px}.game-topline{font-size:9px}}
 </style>
 </head>
 <body>
-
-<div id="loader">
-  <div class="loader-logo">PUNYCLOUD</div>
-  <div class="loader-sub">SYSTEM INITIALIZATION</div>
-  <div class="loader-track"><div class="loader-progress"></div></div>
-  <div class="loader-status" id="loaderStatus">LOADING MODULES...</div>
-</div>
 
 <canvas id="nebula"></canvas>
 <canvas id="stars"></canvas>
 <div class="scanlines"></div>
 
 <div class="app">
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">P</div>
-      <div>
-        <div class="brand-name">PUNYCLOUD</div>
-        <div class="brand-caption">PERSONAL DIGITAL SPACE</div>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">P</div>
+    <div><div class="brand-name">PUNYCLOUD</div><div class="brand-caption">PERSONAL DIGITAL SPACE</div></div>
+  </div>
+  <div class="system-status"><span class="status-dot"></span> SYSTEM ONLINE</div>
+</header>
+
+<section class="hero">
+  <div class="hero-label">WELCOME TO THE SYSTEM</div>
+  <h1>PUNYCLOUD</h1>
+  <p>YOUR SPACE. YOUR RULES. YOUR SYSTEM.</p>
+  <div class="hero-bottom">
+    <button class="btn primary" onclick="showPage('profile')">OPEN PROFILE</button>
+    <button class="btn cyan" onclick="showPage('snake')">PLAY SNAKE</button>
+  </div>
+</section>
+
+<nav class="nav">
+  <button class="nav-btn active" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">◈</span>PROFILE</button>
+  <button class="nav-btn" data-page="about" onclick="showPage('about')"><span class="nav-icon">⌘</span>ABOUT</button>
+  <button class="nav-btn" data-page="gallery" onclick="showPage('gallery')"><span class="nav-icon">▧</span>GALLERY</button>
+  <button class="nav-btn" data-page="snake" onclick="showPage('snake')"><span class="nav-icon">蛇</span>SNAKE GAME</button>
+  <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙</span>SETTINGS</button>
+  <button class="nav-btn" data-page="contact" onclick="showPage('contact')"><span class="nav-icon">✉</span>CONTACT</button>
+</nav>
+
+<main>
+<section class="page active" id="profile">
+  <div class="section-head"><h2 class="section-title">USER <span>PROFILE</span></h2><div class="section-tag">ID: PUNY-001 / ONLINE</div></div>
+  <div class="profile-main">
+    <div class="avatar">P</div>
+    <div><div class="profile-name">PUNYCLOUD</div><div class="profile-role">SYSTEM OWNER / DEVELOPER</div><p style="color:var(--muted);margin-top:12px">Добро пожаловать в личное цифровое пространство.</p></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><strong>01</strong><span>PROFILE</span></div>
+    <div class="stat"><strong>06</strong><span>MODULES</span></div>
+    <div class="stat"><strong>ON</strong><span>STATUS</span></div>
+  </div>
+  <div class="grid" style="margin-top:17px">
+    <div class="panel"><h3>◈ SYSTEM ACCESS</h3><p>Все основные разделы доступны через навигационную панель. Выбирай нужный модуль и пользуйся.</p></div>
+    <div class="panel"><h3>◈ PERSONAL SPACE</h3><p>Настраивай визуальный стиль, запускай мини-игру и исследуй содержимое сайта.</p></div>
+  </div>
+</section>
+
+<section class="page" id="about">
+  <div class="section-head"><h2 class="section-title">ABOUT <span>SYSTEM</span></h2><div class="section-tag">INFORMATION MODULE</div></div>
+  <div class="grid">
+    <div class="panel"><h3>01 / WHAT IS IT?</h3><p>PunyCloud — персональная интерактивная веб-платформа с собственным интерфейсом, настройками, визуальными эффектами и мини-играми.</p></div>
+    <div class="panel"><h3>02 / DESIGN</h3><p>Тёмный интерфейс, неоновые акценты, анимированный космический фон и адаптация под мобильные устройства.</p></div>
+    <div class="panel"><h3>03 / FEATURES</h3><p>Профиль, галерея, настройки оформления, контактный раздел и мини-игра Snake.</p></div>
+    <div class="panel"><h3>04 / TECHNOLOGY</h3><p>HTML, CSS и JavaScript. Сайт работает прямо в браузере и не требует установки дополнительных приложений.</p></div>
+  </div>
+</section>
+
+<section class="page" id="gallery">
+  <div class="section-head"><h2 class="section-title">DATA <span>GALLERY</span></h2><div class="section-tag">COLLECTION / 03 ITEMS</div></div>
+  <div class="gallery-grid">
+    <div class="gallery-card" onclick="openPopup('БОРЦЫ','Раздел коллекции. Здесь можно разместить информацию, фотографии и описания.')"><div class="gallery-symbol">⚔</div><div><h3>БОРЦЫ</h3><p>Открыть коллекцию</p></div></div>
+    <div class="gallery-card" onclick="openPopup('ARCHIVE','Архив материалов PunyCloud. Добавляй сюда свои изображения и описания.')"><div class="gallery-symbol">▤</div><div><h3>ARCHIVE</h3><p>Открыть архив</p></div></div>
+    <div class="gallery-card" onclick="openPopup('EXTRAS','Дополнительные материалы и будущие разделы сайта.')"><div class="gallery-symbol">✧</div><div><h3>EXTRAS</h3><p>Дополнительный раздел</p></div></div>
+  </div>
+</section>
+
+<section class="page" id="snake">
+  <div class="section-head"><h2 class="section-title">SNAKE <span>GAME</span></h2><div class="section-tag">ARCADE MODULE / 001</div></div>
+  <div class="game-layout">
+    <div class="game-board-wrap">
+      <div class="game-topline"><div>GAME FIELD <span>/// 20 × 20</span></div><div>STATUS: <span id="gameStatus">READY</span></div></div>
+      <canvas id="snakeCanvas" width="600" height="600"></canvas>
+      <div class="game-message" id="gameMessage">НАЖМИ START, ЧТОБЫ НАЧАТЬ</div>
+    </div>
+    <div class="game-side">
+      <div class="score-box"><div class="score-label">CURRENT SCORE</div><div class="score-number" id="score">0</div></div>
+      <div class="score-box"><div class="score-label">BEST RECORD</div><div class="score-number" id="bestScore">0</div></div>
+      <div class="score-box">
+        <div class="score-label">CONTROL PANEL</div>
+        <div class="game-buttons" style="margin-top:14px">
+          <button class="btn primary" onclick="startGame()">START</button>
+          <button class="btn cyan" onclick="pauseGame()">PAUSE</button>
+          <button class="btn danger" onclick="resetGame()">RESET</button>
+        </div>
+        <div class="game-controls">
+          <button class="dpad up" onclick="changeDirection(0,-1)">W ▲</button>
+          <button class="dpad left" onclick="changeDirection(-1,0)">A ◀</button>
+          <button class="dpad down" onclick="changeDirection(0,1)">S ▼</button>
+          <button class="dpad right" onclick="changeDirection(1,0)">D ▶</button>
+        </div>
+      </div>
+      <div class="score-box">
+        <div class="score-label">KEYBOARD CONTROL</div>
+        <p class="key-hint" style="margin-top:12px"><b>W</b> — вверх<br><b>A</b> — влево<br><b>S</b> — вниз<br><b>D</b> — вправо<br>Также работают стрелки клавиатуры.</p>
       </div>
     </div>
-    <div class="system-status"><span class="status-dot"></span> SYSTEM ONLINE</div>
-  </header>
+  </div>
+</section>
 
-  <section class="hero">
-    <div class="hero-label">WELCOME TO THE SYSTEM</div>
-    <h1>PUNYCLOUD</h1>
-    <p>YOUR SPACE. YOUR RULES. YOUR SYSTEM.</p>
-    <div class="hero-bottom">
-      <button class="btn primary" onclick="showPage('profile')">OPEN PROFILE</button>
-      <button class="btn cyan" onclick="showPage('snake')">PLAY SNAKE</button>
-    </div>
-  </section>
+<section class="page" id="settings">
+  <div class="section-head"><h2 class="section-title">SYSTEM <span>SETTINGS</span></h2><div class="section-tag">CUSTOMIZATION</div></div>
+  <div class="panel">
+    <div class="setting-row"><div><strong>STAR BACKGROUND</strong><small>Космические звёзды на фоне</small></div><label class="switch"><input type="checkbox" id="starsToggle" checked onchange="saveSettings()"><span></span></label></div>
+    <div class="setting-row"><div><strong>CLICK EFFECTS</strong><small>Частицы при нажатии</small></div><label class="switch"><input type="checkbox" id="clickToggle" checked onchange="saveSettings()"><span></span></label></div>
+    <div class="setting-row"><div><strong>NEBULA BACKGROUND</strong><small>Цветные космические облака</small></div><label class="switch"><input type="checkbox" id="nebulaToggle" checked onchange="saveSettings()"><span></span></label></div>
+    <div class="setting-row"><div><strong>ACCENT COLOR</strong><small>Главный цвет интерфейса</small></div><input type="color" id="accentColor" value="#a855f7" onchange="saveSettings()"></div>
+    <div class="setting-row"><div><strong>BACKGROUND INTENSITY</strong><small>Яркость фоновых эффектов</small></div><input type="range" id="intensity" min="10" max="100" value="65" oninput="saveSettings()"></div>
+    <div style="margin-top:22px"><button class="btn danger" onclick="resetSettings()">RESET SETTINGS</button></div>
+  </div>
+</section>
 
-  <nav class="nav">
-    <button class="nav-btn active" data-page="profile" onclick="showPage('profile')">
-      <span class="nav-icon">◈</span>PROFILE
-    </button>
-    <button class="nav-btn" data-page="about" onclick="showPage('about')">
-      <span class="nav-icon">⌘</span>ABOUT
-    </button>
-    <button class="nav-btn" data-page="gallery" onclick="showPage('gallery')">
-      <span class="nav-icon">▧</span>GALLERY
-    </button>
-    <button class="nav-btn" data-page="snake" onclick="showPage('snake')">
-      <span class="nav-icon">蛇</span>SNAKE GAME
-    </button>
-    <button class="nav-btn" data-page="settings" onclick="showPage('settings')">
-      <span class="nav-icon">⚙</span>SETTINGS
-    </button>
-    <button class="nav-btn" data-page="contact" onclick="showPage('contact')">
-      <span class="nav-icon">✉</span>CONTACT
-    </button>
-  </nav>
+<section class="page" id="contact">
+  <div class="section-head"><h2 class="section-title">CONTACT <span>MODULE</span></h2><div class="section-tag">COMMUNICATION</div></div>
+  <div class="grid">
+    <div class="panel"><h3>✉ TELEGRAM</h3><p>Добавь свою ссылку на Telegram в кнопку ниже.</p><button class="btn primary" style="margin-top:18px" onclick="openTelegram()">OPEN TELEGRAM</button></div>
+    <div class="panel"><h3>◈ SYSTEM INFO</h3><p>PunyCloud Personal Digital Space<br>Interface version 2.0<br>Status: Operational</p></div>
+  </div>
+</section>
+</main>
 
-  <main>
-    <section class="page active" id="profile">
-      <div class="section-head">
-        <h2 class="section-title">USER <span>PROFILE</span></h2>
-        <div class="section-tag">ID: PUNY-001 / ONLINE</div>
-      </div>
-      <div class="profile-main">
-        <div class="avatar">P</div>
-        <div>
-          <div class="profile-name">PUNYCLOUD</div>
-          <div class="profile-role">SYSTEM OWNER / DEVELOPER</div>
-          <p style="color:var(--muted);margin-top:12px">Добро пожаловать в личное цифровое пространство.</p>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat"><strong>01</strong><span>PROFILE</span></div>
-        <div class="stat"><strong>06</strong><span>MODULES</span></div>
-        <div class="stat"><strong>ON</strong><span>STATUS</span></div>
-      </div>
-      <div class="grid" style="margin-top:17px">
-        <div class="panel"><h3>◈ SYSTEM ACCESS</h3><p>Все основные разделы доступны через навигационную панель. Выбирай нужный модуль и пользуйся.</p></div>
-        <div class="panel"><h3>◈ PERSONAL SPACE</h3><p>Настраивай визуальный стиль, запускай мини-игру и исследуй содержимое сайта.</p></div>
-      </div>
-    </section>
+<div class="contact-strip"><div><strong>PUNYCLOUD / DIGITAL SPACE</strong><br><span>Personal interface system</span></div><button class="btn cyan" onclick="showPage('contact')">CONTACT</button></div>
+<footer>© PUNYCLOUD — ALL SYSTEMS OPERATIONAL</footer>
+</div>
 
-    <section class="page" id="about">
-      <div class="section-head">
-        <h2 class="section-title">ABOUT <span>SYSTEM</span></h2>
-        <div class="section-tag">INFORMATION MODULE</div>
-      </div>
-      <div class="grid">
-        <div class="panel"><h3>01 / WHAT IS IT?</h3><p>PunyCloud — персональная интерактивная веб-платформа с собственным интерфейсом, настройками, визуальными эффектами и мини-играми.</p></div>
-        <div class="panel"><h3>02 / DESIGN</h3><p>Тёмный интерфейс, неоновые акценты, анимированный космический фон и адаптация под мобильные устройства.</p></div>
-        <div class="panel"><h3>03 / FEATURES</h3><p>Профиль, галерея, настройки оформления, контактный раздел и игра Snake.</p></div>
-        <div class="panel"><h3>04 / TECHNOLOGY</h3><p>HTML, CSS и JavaScript. Сайт работает прямо в браузере и не требует установки дополнительных приложений.</p></div>
-      </div>
-    </section>
+<div id="popup" onclick="if(event.target===this)closePopup()">
+  <div class="popup-box"><div class="section-tag">GALLERY MODULE</div><h2 id="popupTitle">TITLE</h2><p id="popupText"></p><button class="btn primary" onclick="closePopup()">CLOSE WINDOW</button></div>
+</div>
 
-    <section class="page" id="gallery">
-      <div class="section-head">
-        <h2 class="section-title">DATA <span>GALLERY</span></h2>
-        <div class="section-tag">COLLECTION / 03 ITEMS</div>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-card" onclick="openPopup('БОРЦЫ','Раздел коллекции. Здесь можно разместить информацию, фотографии и описания.')">
-          <div class="gallery-symbol">⚔</div>
-          <div><h3>БОРЦЫ</h3><p>Открыть коллекцию</p></div>
-        </div>
-        <div class="gallery-card" onclick="openPopup('ARCHIVE','Архив материалов PunyCloud. Добавляй сюда свои изображения и описания.')">
-          <div class="gallery-symbol">▤</div>
-          <div><h3>ARCHIVE</h3><p>Открыть архив</p></div>
-        </div>
-        <div class="gallery-card" onclick="openPopup('EXTRAS','Дополнительные материалы и будущие разделы сайта.')">
-          <div class="gallery-symbol">✧</div>
-          <div><h3>EXTRAS</h3><p>Дополнительный раздел</p></div>
-        </div>
-      </div>
-    </section>
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const page=document.getElementById(id);
+  const button=document.querySelector('.nav-btn[data-page="'+id+'"]');
+  if(page)page.classList.add('active');
+  if(button)button.classList.add('active');
+  if(id!=='snake'&&gameRunning)pauseGame();
+  if(id==='snake')drawGame();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openPopup(title,text){
+  document.getElementById('popupTitle').textContent=title;
+  document.getElementById('popupText').textContent=text;
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup(){document.getElementById('popup').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup()});
+function openTelegram(){window.open('https://t.me/','_blank')}
 
-    <section class="page" id="snake">
-      <div class="section-head">
-        <h2 class="section-title">SNAKE <span>GAME</span></h2>
-        <div class="section-tag">ARCADE MODULE / 001</div>
-      </div>
+const defaultSettings={stars:true,click:true,nebula:true,accent:'#a855f7',intensity:65};
+let settings={...defaultSettings};
+function loadSettings(){
+  try{const saved=JSON.parse(localStorage.getItem('punycloud_settings_v2'));if(saved)settings={...defaultSettings,...saved}}catch(e){}
+  document.getElementById('starsToggle').checked=settings.stars;
+  document.getElementById('clickToggle').checked=settings.click;
+  document.getElementById('nebulaToggle').checked=settings.nebula;
+  document.getElementById('accentColor').value=settings.accent;
+  document.getElementById('intensity').value=settings.intensity;
+  applySettings();
+}
+function saveSettings(){
+  settings={
+    stars:document.getElementById('starsToggle').checked,
+    click:document.getElementById('clickToggle').checked,
+    nebula:document.getElementById('nebulaToggle').checked,
+    accent:document.getElementById('accentColor').value,
+    intensity:Number(document.getElementById('intensity').value)
+  };
+  localStorage.setItem('punycloud_settings_v2',JSON.stringify(settings));
+  applySettings();
+}
+function applySettings(){
+  document.documentElement.style.setProperty('--accent',settings.accent);
+  document.getElementById('stars').style.display=settings.stars?'block':'none';
+  document.getElementById('nebula').style.display=settings.nebula?'block':'none';
+}
+function resetSettings(){settings={...defaultSettings};localStorage.removeItem('punycloud_settings_v2');loadSettings()}
+loadSettings();
 
-      <div class="game-layout">
-        <div class="game-board-wrap">
-          <div class="game-topline">
-            <div>GAME FIELD <span>/// 20 × 20</span></div>
-            <div>STATUS: <span id="gameStatus">READY</span></div>
-          </div>
-          <canvas id="snakeCanvas" width="600" height="600"></canvas>
-          <div class="game-message" id="gameMessage">НАЖМИ START, ЧТОБЫ НАЧАТЬ</div>
-        </div>
+const starCanvas=document.getElementById('stars');
+const starCtx=starCanvas.getContext('2d');
+let stars=[];
+function resizeStars(){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  starCanvas.width=innerWidth*dpr;starCanvas.height=innerHeight*dpr;
+  starCanvas.style.width=innerWidth+'px';starCanvas.style.height=innerHeight+'px';
+  starCtx.setTransform(dpr,0,0,dpr,0,0);
+  stars=Array.from({length:Math.min(170,Math.floor(innerWidth/7))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.5+.2,a:Math.random()*.65+.15,s:Math.random()*.012+.003}));
+}
+function drawStars(){
+  starCtx.clearRect(0,0,innerWidth,innerHeight);
+  stars.forEach(s=>{s.a+=s.s;if(s.a>.9||s.a<.15)s.s*=-1;starCtx.fillStyle='rgba(210,190,255,'+s.a+')';starCtx.beginPath();starCtx.arc(s.x,s.y,s.r,0,Math.PI*2);starCtx.fill()});
+  requestAnimationFrame(drawStars);
+}
+resizeStars();drawStars();addEventListener('resize',resizeStars);
 
-        <div class="game-side">
-          <div class="score-box">
-            <div class="score-label">CURRENT SCORE</div>
-            <div class="score-number" id="score">0</div>
-          </div>
-          <div class="score-box">
-            <div class="score-label">BEST RECORD</div>
-            <div class="score-number" id="bestScore">0</div>
-          </div>
-          <div class="score-box">
-            <div class="score-label">CONTROL PANEL</div>
-            <div class="game-buttons" style="margin-top:14px">
-              <button class="btn primary" onclick="startGame()">START</button>
-              <button class="btn cyan" onclick="pauseGame()">PAUSE</button>
-              <button class="btn danger" onclick="resetGame()">RESET</button>
-            </div>
-            <div class="game-controls">
-              <button class="dpad up" onclick="changeDirection(0,-1)">W ▲</button>
-              <button class="dpad left" onclick="changeDirection(-1,0)">A ◀</button>
-              <button class="dpad down" onclick="changeDirection(0,1)">S ▼</button>
-              <button class="dpad right" onclick="changeDirection(1,0)">D ▶</button>
-            </div>
-          </div>
-          <div class="score-box">
-            <div class="score-label">KEYBOARD CONTROL</div>
-            <p class="key-hint" style="margin-top:12px">
-              <b>W</b> — вверх<br>
-              <b>A</b> — влево<br>
-              <b>S</b> — вниз<br>
-              <b>D</b> — вправо<br>
-              Также работают стрелки клавиатуры.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+const nebula=document.getElementById('nebula');
+const nctx=nebula.getContext('2d');
+let nebulaTime=0;
+function resizeNebula(){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  nebula.width=innerWidth*dpr;nebula.height=innerHeight*dpr;
+  nebula.style.width=innerWidth+'px';nebula.style.height=innerHeight+'px';
+  nctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function drawNebula(){
+  nebulaTime+=.002;nctx.clearRect(0,0,innerWidth,innerHeight);
+  const blobs=[
+    [innerWidth*(.2+Math.sin(nebulaTime)*.12),innerHeight*.25,330,'rgba(116,40,190,'],
+    [innerWidth*(.8+Math.cos(nebulaTime*.8)*.1),innerHeight*.65,390,'rgba(20,90,180,'],
+    [innerWidth*.48,innerHeight*(.85+Math.sin(nebulaTime*.7)*.05),280,'rgba(130,35,120,']
+  ];
+  blobs.forEach(b=>{
+    const g=nctx.createRadialGradient(b[0],b[1],0,b[0],b[1],b[2]);
+    const alpha=(settings.intensity||65)/100*.13;
+    g.addColorStop(0,b[3]+alpha+')');g.addColorStop(1,b[3]+'0)');
+    nctx.fillStyle=g;nctx.fillRect(0,0,innerWidth,innerHeight);
+  });
+  requestAnimationFrame(drawNebula);
+}
+resizeNebula();drawNebula();addEventListener('resize',resizeNebula);
 
-    <section class="page" id="settings">
-      <div class="section-head">
-        <h2 class="section-title"
+document.addEventListener('pointerdown',e=>{
+  if(!settings.click)return;
+  if(e.target.closest('button')||e.target.closest('.gallery-card')){
+    const particle=document.createElement('div');
+    particle.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:8px;height:8px;border:1px solid var(--accent2);border-radius:50%;pointer-events:none;z-index:999;transform:translate(-50%,-50%);animation:clickWave .55s ease-out forwards`;
+    document.body.appendChild(particle);setTimeout(()=>particle.remove(),600);
+  }
+});
+const waveStyle=document.createElement('style');
+waveStyle.textContent='@keyframes clickWave{to{width:65px;height:65px;opacity:0}}';
+document.head.appendChild(waveStyle);
+
+/* SNAKE */
+const canvas=document.getElementById('snakeCanvas');
+const ctx=canvas.getContext('2d');
+const SIZE=20,CELL=canvas.width/SIZE;
+let snake=[],food={x:12,y:10},direction={x:1,y:0},nextDirection={x:1,y:0};
+let gameRunning=false,gameOver=false,gameLoop=null,score=0;
+let best=Number(localStorage.getItem('punycloud_snake_best')||0);
+document.getElementById('bestScore').textContent=best;
+
+function initGame(){
+  snake=[{x:8,y:10},{x:7,y:10},{x:6,y:10}];
+  direction={x:1,y:0};nextDirection={x:1,y:0};
+  score=0;gameOver=false;placeFood();updateScore();
+  setGameStatus('READY');
+  document.getElementById('gameMessage').textContent='НАЖМИ START, ЧТОБЫ НАЧАТЬ';
+  drawGame();
+}
+function placeFood(){
+  let valid=false;
+  while(!valid){
+    food={x:Math.floor(Math.random()*SIZE),y:Math.floor(Math.random()*SIZE)};
+    valid=!snake.some(s=>s.x===food.x&&s.y===food.y);
+  }
+}
+function updateScore(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('bestScore').textContent=best;
+}
+function setGameStatus(value){document.getElementById('gameStatus').textContent=value}
+function startGame(){
+  if(gameRunning)return;
+  if(gameOver)initGame();
+  gameRunning=true;setGameStatus('PLAYING');
+  document.getElementById('gameMessage').textContent='ИГРА ИДЁТ — WASD / ARROWS';
+  runLoop();
+}
+function runLoop(){clearInterval(gameLoop);gameLoop=setInterval(tick,Math.max(65,145-score*2))}
+function pauseGame(){
+  if(!gameRunning)return;
+  gameRunning=false;clearInterval(gameLoop);
+  setGameStatus('PAUSED');
+  document.getElementById('gameMessage').textContent='ПАУЗА — НАЖМИ START';
+  drawGame();
+}
+function resetGame(){gameRunning=false;clearInterval(gameLoop);initGame()}
+function endGame(){
+  gameRunning=false;gameOver=true;clearInterval(gameLoop);
+  setGameStatus('GAME OVER');
+  document.getElementById('gameMessage').textContent='ИГРА ОКОНЧЕНА — НАЖМИ START';
+  if(score>best){best=score;localStorage.setItem('punycloud_snake_best',best);updateScore()}
+  drawGame();
+}
+function changeDirection(x,y){
+  if(x===-direction.x&&y===-direction.y)return;
+  nextDirection={x,y};
+  if(!gameRunning&&!gameOver)direction={x,y};
+}
+function tick(){
+  direction=nextDirection;
+  const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};
+  const hitWall=head.x<0||head.y<0||head.x>=SIZE||head.y>=SIZE;
+  const eating=head.x===food.x&&head.y===food.y;
+  const body=eating?snake:snake.slice(0,-1);
+  const hitBody=body.some(s=>s.x===head.x&&s.y===head.y);
+  if(hitWall||hitBody){endGame();return}
+  snake.unshift(head);
+  if(eating){
+    score+=10;
+    if(score>best){best=score;localStorage.setItem('punycloud_snake_best',best)}
+    updateScore();placeFood();runLoop();
+  }else snake.pop();
+  drawGame();
+}
+function drawGame(){
+  const w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='#050b14';ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='rgba(54,217,255,.075)';ctx.lineWidth=1;
+  for(let i=0;i<=SIZE;i++){
+    ctx.beginPath();ctx.moveTo(i*CELL,0);ctx.lineTo(i*CELL,h);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,i*CELL);ctx.lineTo(w,i*CELL);ctx.stroke();
+  }
+  ctx.save();ctx.shadowBlur=20;ctx.shadowColor='#ff477e';ctx.fillStyle='#ff477e';
+  ctx.beginPath();ctx.arc(food.x*CELL+CELL/2,food.y*CELL+CELL/2,CELL*.32,0,Math.PI*2);ctx.fill();ctx.restore();
+  snake.forEach((part,i)=>{
+    const pad=2,x=part.x*CELL+pad,y=part.y*CELL+pad,size=CELL-pad*2;
+    ctx.save();ctx.shadowBlur=i===0?18:8;ctx.shadowColor=i===0?'#36d9ff':'#a855f7';
+    ctx.fillStyle=i===0?'#8af2ff':'#8b45d1';
+    ctx.beginPath();ctx.roundRect(x,y,size,size,5);ctx.fill();ctx.restore();
+  });
+  if(!gameRunning){
+    ctx.fillStyle='rgba(0,0,0,.34)';ctx.fillRect(0,0,w,h);
+    ctx.textAlign='center';ctx.fillStyle='rgba(255,255,255,.85)';
+    ctx.font='bold 24px Orbitron';ctx.fillText(gameOver?'GAME OVER':'SNAKE',w/2,h/2-8);
+    ctx.fillStyle='#36d9ff';ctx.font='13px Orbitron';
+    ctx.fillText(gameOver?'PRESS START':'PRESS START TO PLAY',w/2,h/2+25);
+  }
+}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('snake').classList.contains('active'))return;
+  const key=e.key.toLowerCase();
+  if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright',' '].includes(key))e.preventDefault();
+  if(key==='w'||key==='arrowup')changeDirection(0,-1);
+  if(key==='s'||key==='arrowdown')changeDirection(0,1);
+  if(key==='a'||key==='arrowleft')changeDirection(-1,0);
+  if(key==='d'||key==='arrowright')changeDirection(1,0);
+  if(key===' '){if(gameRunning)pauseGame();else startGame()}
+});
+initGame();
+</script>
+</body>
+</html>
