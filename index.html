@@ -3,498 +3,564 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PunyCloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUNYCLOUD — SYSTEM</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
 :root{
---bg:#08080d;--text:#e9e8ef;--muted:#85818f;
---border:rgba(190,185,210,.18);--accent:#aaa0c8;
---click:#aaa0c8;--wave:#aaa0c8;--particle:#e4dcff;--glow:#8273b4;
+  --bg:#05050b;
+  --panel:rgba(13,13,28,.88);
+  --panel2:rgba(19,17,39,.88);
+  --line:rgba(153,91,255,.28);
+  --accent:#a855f7;
+  --accent2:#36d9ff;
+  --text:#f5f1ff;
+  --muted:#89849e;
+  --glow:0 0 25px rgba(168,85,247,.35);
 }
-body{min-height:100vh;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;overflow:hidden;transition:background 1s}
-#stars,#effects{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-#effects{z-index:30}
-.glow{position:fixed;width:300px;height:300px;background:var(--glow);opacity:.08;filter:blur(100px);border-radius:50%;top:25%;left:50%;transform:translateX(-50%);pointer-events:none;z-index:1;transition:background .4s}
-.side{position:fixed;top:50%;transform:translateY(-50%);width:90px;height:65vh;z-index:1;pointer-events:none;opacity:.55}
-.side.left{left:15px}.side.right{right:15px}
-.side-line{position:absolute;height:100%;width:1px;background:linear-gradient(transparent,var(--border),transparent);left:50%}
-.side-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 15px var(--accent);left:calc(50% - 2px);animation:float 5s ease-in-out infinite}
-.side-dot:nth-child(2){top:25%;animation-delay:1s}.side-dot:nth-child(3){top:70%;animation-delay:2s}
-@keyframes float{0%,100%{transform:translateY(-12px);opacity:.3}50%{transform:translateY(12px);opacity:1}}
-.intro{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;background:#050509;animation:introFade 1.5s ease 3.5s forwards;pointer-events:none}
-.intro h1{font-size:clamp(35px,10vw,75px);font-weight:300;letter-spacing:15px;background:linear-gradient(90deg,#777481,#fff,var(--accent),#fff);background-size:300% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:shimmer 4s linear infinite}
-@keyframes shimmer{to{background-position:300% center}}
-@keyframes introFade{to{opacity:0;visibility:hidden}}
-.main{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:25px;opacity:0;transition:opacity 1s}
-body.loaded .main{opacity:1}
-.logo{font-size:11px;letter-spacing:8px;color:#9691a4;margin-bottom:18px}
-h2{font-size:clamp(28px,8vw,45px);font-weight:300;letter-spacing:7px;text-align:center;margin-bottom:12px}
-.subtitle{font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:45px;text-align:center}
-.buttons{width:100%;max-width:330px;display:flex;flex-direction:column;gap:13px}
-.menu-btn{width:100%;padding:19px;border:1px solid var(--border);background:rgba(255,255,255,.025);color:inherit;font-size:11px;letter-spacing:4px;cursor:pointer;transition:.35s;backdrop-filter:blur(12px)}
-.menu-btn:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);transform:translateY(-2px)}
-.menu-btn:active{transform:scale(.97)}
-.footer{position:absolute;bottom:25px;color:#77717f;font-size:9px;letter-spacing:4px}
-.contact-trigger{position:fixed;top:20px;right:20px;z-index:10;padding:12px 17px;border:1px solid var(--border);background:rgba(255,255,255,.035);backdrop-filter:blur(15px);color:#d8d3e5;font-size:9px;letter-spacing:3px;cursor:pointer;transition:.35s}
-.contact-trigger:hover{border-color:var(--accent);box-shadow:0 0 25px color-mix(in srgb,var(--accent) 20%,transparent)}
-.contact-overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(3,3,8,.78);backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:.4s}
-.contact-overlay.active{opacity:1;visibility:visible}
-.contact-panel{position:relative;width:100%;max-width:340px;padding:35px 25px;text-align:center;border:1px solid var(--border);background:linear-gradient(145deg,rgba(28,26,39,.98),rgba(9,9,15,.98));box-shadow:0 20px 70px rgba(0,0,0,.5);transform:translateY(20px) scale(.95);transition:.4s}
-.contact-overlay.active .contact-panel{transform:translateY(0) scale(1)}
-.contact-close{position:absolute;top:13px;right:16px;border:0;background:none;color:#85818f;font-size:22px;cursor:pointer}
-.contact-icon{width:58px;height:58px;margin:0 auto 20px;border:1px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#c8bfdc;font-size:22px;box-shadow:0 0 25px color-mix(in srgb,var(--accent) 15%,transparent)}
-.contact-title{font-size:22px;font-weight:300;letter-spacing:5px;margin-bottom:12px}
-.contact-description{font-size:10px;line-height:1.8;letter-spacing:1px;color:#85818f;margin-bottom:25px}
-.contact-creator{font-size:12px;letter-spacing:3px;color:#c9c0df;margin-bottom:8px}
-.contact-username{font-size:11px;color:#85818f;margin-bottom:25px}
-.telegram-link{display:block;width:100%;padding:17px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);color:#e9e8ef;text-decoration:none;font-size:10px;letter-spacing:3px;transition:.3s}
-.telegram-link:hover{background:color-mix(in srgb,var(--accent) 22%,transparent)}
-.contact-footer{margin-top:20px;font-size:8px;letter-spacing:3px;color:#666170}
-.page{position:fixed;inset:0;z-index:5;display:flex;justify-content:center;align-items:center;padding:25px;background:var(--bg);opacity:0;visibility:hidden;transform:translateY(15px);transition:.5s}
-.page.active{opacity:1;visibility:visible;transform:translateY(0)}
-.page-content{width:100%;max-width:430px;max-height:90vh;overflow-y:auto;scrollbar-width:none}
-.page-title{font-size:32px;font-weight:300;letter-spacing:7px;margin-bottom:10px}
-.page-description{font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:25px}
-.setting-card,.profile-card{padding:23px 18px;border:1px solid var(--border);background:rgba(255,255,255,.025);backdrop-filter:blur(15px);margin-bottom:15px}
-.setting-heading{font-size:11px;letter-spacing:3px;margin-bottom:10px}
-.setting-info{font-size:10px;color:var(--muted);line-height:1.7;margin-bottom:18px}
-.toggle-row{display:flex;align-items:center;justify-content:space-between}
-.toggle{position:relative;width:94px;height:37px;display:flex;align-items:center;padding:3px;border:1px solid var(--border);border-radius:30px;background:rgba(0,0,0,.2);cursor:pointer;transition:.4s}
-.toggle:before{content:"";position:absolute;width:41px;height:29px;border-radius:25px;background:#55515f;left:3px;transition:.4s}
-.toggle.enabled:before{transform:translateX(44px);background:var(--accent);box-shadow:0 0 13px var(--accent)}
-.toggle span{z-index:1;flex:1;text-align:center;font-size:9px;color:#85818f}
-.toggle span.active{color:white}
-input[type=range]{width:100%;accent-color:var(--accent)}
-.range-labels{display:flex;justify-content:space-between;font-size:9px;color:#88838f;margin-top:12px}
-.color-preview{height:32px;border:1px solid var(--border);margin-top:15px;border-radius:3px;transition:background .3s}
-.setting-divider{height:1px;background:var(--border);margin:20px 0}
-.color-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
-.color-row label{font-size:10px;letter-spacing:2px;color:#c5c0d0}
-.color-input{width:48px;height:36px;border:1px solid var(--border);background:transparent;padding:2px;cursor:pointer;border-radius:5px}
-.color-code{font-size:10px;color:var(--muted);letter-spacing:1px;min-width:70px;text-align:right}
-.color-presets{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-.preset{width:31px;height:31px;border-radius:50%;border:2px solid rgba(255,255,255,.25);cursor:pointer;transition:.2s}
-.preset:hover{transform:scale(1.15);border-color:white}
-.preset.active{outline:2px solid white;outline-offset:3px}
-.color-action{width:100%;padding:13px;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text);font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:10px}
-.color-action:hover{border-color:var(--accent)}
-.profile-card{text-align:center;padding:30px 20px}
-.profile-icon{width:75px;height:75px;margin:0 auto 22px;border-radius:50%;border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:25px;color:#c7bfdc;animation:profileGlow 4s infinite}
-@keyframes profileGlow{50%{box-shadow:0 0 30px color-mix(in srgb,var(--accent) 22%,transparent)}}
-.profile-name{font-size:22px;font-weight:300;letter-spacing:5px;margin-bottom:10px}
-.profile-role,.creator-label{font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:23px}
-.profile-divider{width:55px;height:1px;background:var(--accent);margin:0 auto 23px}
-.creator-label{color:#85818f}
-.creator-name{font-size:14px;line-height:1.6}
-.profile-version{margin-top:22px;font-size:9px;letter-spacing:3px;color:#666170}
-#gallery .page-content{position:relative}
-.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;padding-bottom:10px}
-.person-card{position:relative;height:135px;border:1px solid var(--border);background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 70%),rgba(255,255,255,.025);backdrop-filter:blur(15px);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:.4s;animation:cardAppear .7s both}
-.person-card:nth-child(2){animation-delay:.08s}.person-card:nth-child(3){animation-delay:.16s}.person-card:nth-child(4){animation-delay:.24s}.person-card:nth-child(5){animation-delay:.32s}.person-card:nth-child(6){animation-delay:.40s}.person-card:nth-child(7){animation-delay:.48s}.person-card:nth-child(8){animation-delay:.56s}.person-card:nth-child(9){animation-delay:.64s}
-@keyframes cardAppear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.person-card:before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:color-mix(in srgb,var(--accent) 10%,transparent);filter:blur(35px);opacity:0;transition:.4s}
-.person-card:hover:before{opacity:1}
-.person-card:hover{border-color:var(--accent);transform:translateY(-3px)}
-.person-number{font-size:9px;letter-spacing:4px;color:#77717f;margin-bottom:13px}
-.person-name{font-size:16px;font-weight:300;letter-spacing:3px;position:relative;z-index:1}
-.person-line{width:25px;height:1px;background:var(--accent);margin-top:14px;opacity:.7;transition:.4s}
-.person-card:hover .person-line{width:55px}
-.creator-person{border-color:var(--accent);background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--accent) 20%,transparent),transparent 70%),rgba(170,160,200,.045)}
-.creator-person .person-name{color:#c8bfdc}
-.creator-person .person-number{color:var(--accent)}
-.fighters-popup{position:fixed;z-index:12;top:18px;right:18px;width:205px;padding:17px;border:1px solid var(--border);background:rgba(12,11,19,.94);backdrop-filter:blur(20px);box-shadow:0 10px 40px rgba(0,0,0,.4);opacity:0;visibility:hidden;transform:translateX(25px) scale(.94);transition:.5s}
-.fighters-popup.show{opacity:1;visibility:visible;transform:translateX(0) scale(1)}
-.fighters-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
-.fighters-title{font-size:10px;letter-spacing:3px;color:var(--accent)}
-.fighters-close{border:0;background:none;color:#8e8999;font-size:18px;cursor:pointer}
-.fighters-subtitle{font-size:8px;letter-spacing:2px;color:#77717f;margin-bottom:12px}
-.fighter{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:11px;letter-spacing:2px}
-.fighter-number{font-size:9px;color:var(--accent)}
-.fighters-bottom{margin-top:12px;font-size:8px;letter-spacing:2px;color:#77717f;text-align:center}
-.person-detail{position:fixed;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;padding:25px;background:rgba(4,4,9,.94);backdrop-filter:blur(18px);opacity:0;visibility:hidden;transition:.4s}
-.person-detail.active{opacity:1;visibility:visible}
-.detail-box{width:100%;max-width:350px;padding:50px 25px;text-align:center;border:1px solid var(--border);background:rgba(255,255,255,.025);transform:scale(.9);transition:.4s}
-.person-detail.active .detail-box{transform:scale(1)}
-.detail-number{font-size:10px;letter-spacing:5px;color:var(--accent);margin-bottom:25px}
-.detail-name{font-size:clamp(28px,8vw,42px);font-weight:300;letter-spacing:6px;margin-bottom:22px}
-.detail-description{font-size:12px;line-height:1.8;letter-spacing:1px;color:#aaa5b5;min-height:40px}
-.back{margin-top:18px}
-@media(max-width:600px){
-.side{width:25px;opacity:.3}.side.left{left:3px}.side.right{right:3px}
-.page{padding:20px}.person-card{height:125px}
-.fighters-popup{top:12px;right:12px;width:180px;padding:13px}
-.contact-trigger{top:12px;right:12px;padding:11px 13px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:var(--bg);
+  font-family:'Rajdhani',Arial,sans-serif;
+  overflow-x:hidden;
+}
+button{font:inherit}
+#stars,#nebula{
+  position:fixed;inset:0;width:100%;height:100%;
+  pointer-events:none;
+}
+#nebula{z-index:0}
+#stars{z-index:1}
+.scanlines{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+  opacity:.12;
+  background:repeating-linear-gradient(
+    to bottom,transparent 0px,transparent 3px,
+    rgba(255,255,255,.045) 4px
+  );
+}
+body:after{
+  content:"";position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.65) 100%);
+}
+#loader{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  background:#05050b;
+  transition:opacity .7s,visibility .7s;
+}
+#loader.hide{opacity:0;visibility:hidden}
+.loader-logo{
+  font:900 clamp(35px,9vw,75px) 'Orbitron';
+  letter-spacing:8px;
+  color:white;
+  text-shadow:0 0 20px var(--accent),0 0 60px var(--accent);
+  animation:logoPulse 1.5s infinite alternate;
+}
+.loader-sub{
+  margin-top:16px;color:var(--accent2);
+  letter-spacing:7px;font:600 12px 'Orbitron';
+}
+.loader-track{
+  margin-top:38px;width:min(340px,75vw);height:5px;
+  background:#21172f;border-radius:20px;overflow:hidden;
+}
+.loader-progress{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  box-shadow:0 0 18px var(--accent);
+  animation:load 2.1s ease forwards;
+}
+.loader-status{
+  margin-top:15px;color:var(--muted);
+  font:11px 'Orbitron';letter-spacing:3px;
+}
+@keyframes load{to{width:100%}}
+@keyframes logoPulse{to{text-shadow:0 0 35px var(--accent),0 0 90px var(--accent)}}
+
+.app{
+  position:relative;z-index:3;
+  width:min(1450px,96%);
+  margin:auto;padding:22px 0 55px;
+}
+.topbar{
+  min-height:86px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:15px 24px;
+  background:rgba(10,9,21,.82);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--glow);
+  backdrop-filter:blur(16px);
+}
+.brand{display:flex;align-items:center;gap:15px}
+.brand-mark{
+  width:52px;height:52px;border:1px solid var(--accent);
+  border-radius:13px;display:grid;place-items:center;
+  color:var(--accent2);font:900 24px 'Orbitron';
+  box-shadow:inset 0 0 20px rgba(168,85,247,.2),var(--glow);
+}
+.brand-name{
+  font:800 21px 'Orbitron';letter-spacing:3px;
+}
+.brand-caption{
+  color:var(--muted);font-size:11px;letter-spacing:3px;
+  margin-top:5px;
+}
+.system-status{
+  display:flex;align-items:center;gap:10px;
+  color:#83ffd1;font:11px 'Orbitron';letter-spacing:2px;
+}
+.status-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:#50ffb2;box-shadow:0 0 15px #50ffb2;
+  animation:blink 1.3s infinite;
+}
+@keyframes blink{50%{opacity:.3}}
+
+.hero{
+  margin:22px 0;
+  min-height:245px;
+  padding:35px clamp(20px,5vw,65px);
+  position:relative;overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:
+    linear-gradient(110deg,rgba(20,12,40,.96),rgba(9,15,34,.78)),
+    radial-gradient(circle at 80% 20%,rgba(168,85,247,.3),transparent 45%);
+  box-shadow:var(--glow);
+}
+.hero:before{
+  content:"";position:absolute;width:350px;height:350px;
+  right:-100px;top:-150px;border-radius:50%;
+  border:1px solid rgba(168,85,247,.3);
+  box-shadow:0 0 0 30px rgba(168,85,247,.035),
+             0 0 0 65px rgba(168,85,247,.025);
+}
+.hero-label{
+  color:var(--accent2);font:600 12px 'Orbitron';
+  letter-spacing:5px;
+}
+.hero h1{
+  font:900 clamp(35px,7vw,70px) 'Orbitron';
+  margin:15px 0 10px;letter-spacing:2px;
+  text-shadow:0 0 25px rgba(168,85,247,.6);
+}
+.hero p{color:#aaa4bd;font-size:18px;margin:0;letter-spacing:1px}
+.hero-bottom{
+  display:flex;gap:12px;flex-wrap:wrap;margin-top:25px;
+}
+.btn{
+  cursor:pointer;border:1px solid var(--line);
+  color:white;background:rgba(168,85,247,.12);
+  padding:13px 22px;border-radius:9px;
+  font:700 11px 'Orbitron';letter-spacing:2px;
+  transition:.25s;position:relative;overflow:hidden;
+}
+.btn:hover{
+  border-color:var(--accent);background:rgba(168,85,247,.25);
+  box-shadow:0 0 25px rgba(168,85,247,.25);
+  transform:translateY(-2px);
+}
+.btn.primary{
+  color:#fff;border-color:var(--accent);
+  background:linear-gradient(100deg,#7027b8,#392b83);
+  box-shadow:0 0 22px rgba(168,85,247,.25);
+}
+.btn.cyan{border-color:rgba(54,217,255,.5);color:var(--accent2)}
+.btn.danger{border-color:rgba(255,80,120,.4);color:#ff7899}
+
+.nav{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  gap:10px;margin:20px 0;
+}
+.nav-btn{
+  cursor:pointer;min-height:72px;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:7px;
+  color:#a9a2bb;background:rgba(12,11,25,.85);
+  border:1px solid rgba(153,91,255,.18);
+  border-radius:12px;
+  font:700 10px 'Orbitron';letter-spacing:1px;
+  transition:.25s;
+}
+.nav-btn .nav-icon{font-size:21px}
+.nav-btn:hover,.nav-btn.active{
+  color:white;border-color:var(--accent);
+  background:rgba(105,48,160,.22);
+  box-shadow:inset 0 0 20px rgba(168,85,247,.1),0 0 18px rgba(168,85,247,.16);
+}
+.page{
+  display:none;min-height:430px;
+  padding:clamp(18px,3vw,35px);
+  background:rgba(8,8,18,.76);
+  border:1px solid var(--line);
+  border-radius:17px;
+  backdrop-filter:blur(14px);
+  animation:pageIn .35s ease;
+}
+.page.active{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;flex-wrap:wrap;margin-bottom:25px;
+}
+.section-title{
+  font:800 clamp(20px,4vw,29px) 'Orbitron';
+  letter-spacing:2px;margin:0;
+}
+.section-title span{color:var(--accent2)}
+.section-tag{font:11px 'Orbitron';color:var(--muted);letter-spacing:2px}
+.grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;
+}
+.panel{
+  padding:22px;border:1px solid rgba(153,91,255,.2);
+  border-radius:13px;background:var(--panel);
+}
+.panel h3{
+  margin:0 0 12px;font:700 13px 'Orbitron';letter-spacing:1px;
+}
+.panel p{color:#aaa5b9;line-height:1.7;margin:0}
+.profile-main{
+  display:flex;align-items:center;gap:25px;flex-wrap:wrap;
+  padding:27px;background:var(--panel);
+  border:1px solid var(--line);border-radius:15px;
+}
+.avatar{
+  width:115px;height:115px;border-radius:20px;
+  display:grid;place-items:center;
+  font:900 43px 'Orbitron';color:white;
+  border:1px solid var(--accent);
+  background:linear-gradient(135deg,#56248b,#111c42);
+  box-shadow:var(--glow);
+}
+.profile-name{font:800 27px 'Orbitron';margin-bottom:8px}
+.profile-role{color:var(--accent2);letter-spacing:3px;font-size:12px}
+.stat-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-top:17px;
+}
+.stat{
+  padding:18px;text-align:center;border:1px solid var(--line);
+  background:rgba(13,12,28,.8);border-radius:12px;
+}
+.stat strong{display:block;font:800 24px 'Orbitron';color:var(--accent2)}
+.stat span{font-size:11px;color:var(--muted);letter-spacing:2px}
+
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;
+}
+.gallery-card{
+  min-height:170px;padding:20px;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:space-between;
+  border:1px solid var(--line);border-radius:13px;
+  background:linear-gradient(145deg,rgba(40,22,68,.8),rgba(9,15,31,.9));
+  transition:.25s;
+}
+.gallery-card:hover{transform:translateY(-5px);border-color:var(--accent2);box-shadow:var(--glow)}
+.gallery-symbol{font-size:35px}
+.gallery-card h3{font:700 13px 'Orbitron';letter-spacing:1px}
+.gallery-card p{margin:0;color:var(--muted);font-size:13px}
+#popup{
+  position:fixed;inset:0;z-index:500;
+  display:none;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.8);
+}
+#popup.show{display:flex}
+.popup-box{
+  width:min(480px,100%);padding:30px;
+  border:1px solid var(--accent);border-radius:16px;
+  background:#100d20;box-shadow:0 0 50px rgba(168,85,247,.3);
+}
+.popup-box h2{font:800 22px 'Orbitron'}
+.popup-box p{color:#b5afc6;line-height:1.7}
+
+.setting-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;padding:17px 0;border-bottom:1px solid rgba(153,91,255,.13);
+}
+.setting-row strong{font:700 12px 'Orbitron';letter-spacing:1px}
+.setting-row small{display:block;color:var(--muted);margin-top:5px}
+.switch{width:48px;height:26px;position:relative;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.switch span{
+  position:absolute;inset:0;cursor:pointer;border-radius:30px;
+  background:#343044;transition:.2s;
+}
+.switch span:before{
+  content:"";position:absolute;width:18px;height:18px;
+  left:4px;top:4px;border-radius:50%;background:#aaa;transition:.2s;
+}
+.switch input:checked+span{background:#783bb4}
+.switch input:checked+span:before{transform:translateX(22px);background:white}
+input[type=color]{
+  width:52px;height:35px;background:none;border:0;cursor:pointer;
+}
+input[type=range]{accent-color:var(--accent);width:min(220px,45vw)}
+.contact-strip{
+  margin-top:20px;padding:18px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;flex-wrap:wrap;
+  border:1px solid var(--line);border-radius:13px;
+  background:rgba(10,10,24,.8);
+}
+.contact-strip strong{font:700 12px 'Orbitron';letter-spacing:2px}
+.contact-strip span{color:var(--muted);font-size:13px}
+footer{
+  text-align:center;padding:27px 10px 0;
+  color:#68627c;font:10px 'Orbitron';letter-spacing:3px;
+}
+
+/* SNAKE */
+.game-layout{
+  display:grid;grid-template-columns:minmax(0,1fr) 250px;
+  gap:18px;align-items:start;
+}
+.game-board-wrap{
+  padding:15px;background:rgba(4,8,17,.9);
+  border:1px solid rgba(54,217,255,.35);
+  border-radius:15px;box-shadow:0 0 25px rgba(54,217,255,.08);
+}
+.game-topline{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;margin:0 0 13px;
+  font:11px 'Orbitron';letter-spacing:2px;
+}
+.game-topline span{color:var(--accent2)}
+#snakeCanvas{
+  display:block;width:100%;max-width:650px;
+  aspect-ratio:1/1;margin:auto;
+  background:#050b14;border:1px solid rgba(54,217,255,.22);
+  border-radius:8px;touch-action:none;
+}
+.game-side{display:flex;flex-direction:column;gap:13px}
+.score-box{
+  padding:19px;background:var(--panel);
+  border:1px solid var(--line);border-radius:13px;
+}
+.score-label{font:10px 'Orbitron';letter-spacing:2px;color:var(--muted)}
+.score-number{font:900 33px 'Orbitron';color:var(--accent2);margin-top:9px}
+.game-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:15px}
+.dpad{
+  min-height:53px;border:1px solid rgba(54,217,255,.4);
+  border-radius:9px;background:rgba(54,217,255,.08);
+  color:white;font:800 19px 'Orbitron';cursor:pointer;
+  touch-action:manipulation;
+}
+.dpad:active{background:rgba(54,217,255,.3)}
+.dpad.up{grid-column:2}
+.dpad.left{grid-column:1;grid-row:2}
+.dpad.down{grid-column:2;grid-row:2}
+.dpad.right{grid-column:3;grid-row:2}
+.key-hint{
+  color:var(--muted);font-size:13px;line-height:1.7;
+}
+.key-hint b{color:var(--accent2)}
+.game-message{
+  color:var(--accent2);font:11px 'Orbitron';
+  letter-spacing:1px;min-height:20px;margin-top:12px;
+}
+.game-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.game-buttons .btn{flex:1;padding:13px 10px}
+@media(max-width:850px){
+  .nav{grid-template-columns:repeat(3,1fr)}
+  .game-layout{grid-template-columns:1fr}
+  .game-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .game-side .score-box:last-child{grid-column:1/-1}
+}
+@media(max-width:560px){
+  .app{width:94%;padding-top:10px}
+  .topbar{padding:13px}
+  .brand-name{font-size:16px}
+  .system-status{font-size:9px}
+  .hero{min-height:220px}
+  .nav{gap:7px}
+  .nav-btn{min-height:65px;font-size:9px}
+  .grid,.gallery-grid{grid-template-columns:1fr}
+  .stat-row{gap:7px}
+  .stat{padding:12px 5px}
+  .stat strong{font-size:19px}
+  .game-side{grid-template-columns:1fr 1fr}
+  .game-board-wrap{padding:8px}
+  .game-topline{font-size:9px}
 }
 </style>
 </head>
 <body>
+
+<div id="loader">
+  <div class="loader-logo">PUNYCLOUD</div>
+  <div class="loader-sub">SYSTEM INITIALIZATION</div>
+  <div class="loader-track"><div class="loader-progress"></div></div>
+  <div class="loader-status" id="loaderStatus">LOADING MODULES...</div>
+</div>
+
+<canvas id="nebula"></canvas>
 <canvas id="stars"></canvas>
-<canvas id="effects"></canvas>
-<div class="glow"></div>
-<div class="side left"><div class="side-line"></div><div class="side-dot" style="top:10%"></div><div class="side-dot"></div><div class="side-dot"></div></div>
-<div class="side right"><div class="side-line"></div><div class="side-dot" style="top:10%"></div><div class="side-dot"></div><div class="side-dot"></div></div>
-<div class="intro"><div><h1>WELCOME</h1></div></div>
+<div class="scanlines"></div>
 
-<button class="contact-trigger" onclick="openContact()">CONTACT ↗</button>
-<div class="contact-overlay" id="contactOverlay" onclick="overlayClose(event)">
-<div class="contact-panel">
-<button class="contact-close" onclick="closeContact()">×</button>
-<div class="contact-icon">P</div>
-<div class="contact-title">CONTACT</div>
-<div class="contact-description">HAVE A QUESTION OR WANT TO CONTACT THE CREATOR?</div>
-<div class="contact-creator">JEKA</div>
-<div class="contact-username">@pcixlator</div>
-<a class="telegram-link" href="https://t.me/pcixlator" target="_blank" rel="noopener noreferrer">OPEN TELEGRAM ↗</a>
-<div class="contact-footer">PUNYCLOUD · CONNECTION</div>
-</div>
-</div>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">P</div>
+      <div>
+        <div class="brand-name">PUNYCLOUD</div>
+        <div class="brand-caption">PERSONAL DIGITAL SPACE</div>
+      </div>
+    </div>
+    <div class="system-status"><span class="status-dot"></span> SYSTEM ONLINE</div>
+  </header>
 
-<main class="main">
-<div class="logo">PERSONAL SPACE</div>
-<h2>WELCOME</h2>
-<div class="subtitle">ENTER YOUR OWN WORLD</div>
-<div class="buttons">
-<button class="menu-btn" onclick="openPage('profile')">PROFILE</button>
-<button class="menu-btn" onclick="openPage('about')">ABOUT</button>
-<button class="menu-btn" onclick="openPage('gallery')">GALLERY</button>
-<button class="menu-btn" onclick="openPage('settings')">SETTINGS</button>
-</div>
-<div class="footer">EST. 2026 — YOUR SPACE</div>
-</main>
+  <section class="hero">
+    <div class="hero-label">WELCOME TO THE SYSTEM</div>
+    <h1>PUNYCLOUD</h1>
+    <p>YOUR SPACE. YOUR RULES. YOUR SYSTEM.</p>
+    <div class="hero-bottom">
+      <button class="btn primary" onclick="showPage('profile')">OPEN PROFILE</button>
+      <button class="btn cyan" onclick="showPage('snake')">PLAY SNAKE</button>
+    </div>
+  </section>
 
-<section class="page" id="settings">
-<div class="page-content">
-<div class="page-title">SETTINGS</div>
-<div class="page-description">CUSTOMIZE YOUR EXPERIENCE</div>
+  <nav class="nav">
+    <button class="nav-btn active" data-page="profile" onclick="showPage('profile')">
+      <span class="nav-icon">◈</span>PROFILE
+    </button>
+    <button class="nav-btn" data-page="about" onclick="showPage('about')">
+      <span class="nav-icon">⌘</span>ABOUT
+    </button>
+    <button class="nav-btn" data-page="gallery" onclick="showPage('gallery')">
+      <span class="nav-icon">▧</span>GALLERY
+    </button>
+    <button class="nav-btn" data-page="snake" onclick="showPage('snake')">
+      <span class="nav-icon">蛇</span>SNAKE GAME
+    </button>
+    <button class="nav-btn" data-page="settings" onclick="showPage('settings')">
+      <span class="nav-icon">⚙</span>SETTINGS
+    </button>
+    <button class="nav-btn" data-page="contact" onclick="showPage('contact')">
+      <span class="nav-icon">✉</span>CONTACT
+    </button>
+  </nav>
 
-<div class="setting-card">
-<div class="setting-heading">BACKGROUND EFFECT</div>
-<div class="setting-info">Control the background transition effect.</div>
-<div class="toggle-row">
-<span class="setting-heading">EFFECT</span>
-<div class="toggle enabled" id="effectToggle" onclick="toggleEffect()">
-<span id="effectOff">OFF</span><span id="effectOn" class="active">ON</span>
-</div>
-</div>
-</div>
+  <main>
+    <section class="page active" id="profile">
+      <div class="section-head">
+        <h2 class="section-title">USER <span>PROFILE</span></h2>
+        <div class="section-tag">ID: PUNY-001 / ONLINE</div>
+      </div>
+      <div class="profile-main">
+        <div class="avatar">P</div>
+        <div>
+          <div class="profile-name">PUNYCLOUD</div>
+          <div class="profile-role">SYSTEM OWNER / DEVELOPER</div>
+          <p style="color:var(--muted);margin-top:12px">Добро пожаловать в личное цифровое пространство.</p>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><strong>01</strong><span>PROFILE</span></div>
+        <div class="stat"><strong>06</strong><span>MODULES</span></div>
+        <div class="stat"><strong>ON</strong><span>STATUS</span></div>
+      </div>
+      <div class="grid" style="margin-top:17px">
+        <div class="panel"><h3>◈ SYSTEM ACCESS</h3><p>Все основные разделы доступны через навигационную панель. Выбирай нужный модуль и пользуйся.</p></div>
+        <div class="panel"><h3>◈ PERSONAL SPACE</h3><p>Настраивай визуальный стиль, запускай мини-игру и исследуй содержимое сайта.</p></div>
+      </div>
+    </section>
 
-<div class="setting-card">
-<div class="setting-heading">BACKGROUND COLOR</div>
-<div class="setting-info">Choose your preferred background shade.</div>
-<input type="range" id="colorRange" min="0" max="100" value="0" oninput="changeColor(this.value)">
-<div class="range-labels"><span>DARK</span><span>SOFT</span><span>GREY</span></div>
-<div class="color-preview" id="preview"></div>
-</div>
+    <section class="page" id="about">
+      <div class="section-head">
+        <h2 class="section-title">ABOUT <span>SYSTEM</span></h2>
+        <div class="section-tag">INFORMATION MODULE</div>
+      </div>
+      <div class="grid">
+        <div class="panel"><h3>01 / WHAT IS IT?</h3><p>PunyCloud — персональная интерактивная веб-платформа с собственным интерфейсом, настройками, визуальными эффектами и мини-играми.</p></div>
+        <div class="panel"><h3>02 / DESIGN</h3><p>Тёмный интерфейс, неоновые акценты, анимированный космический фон и адаптация под мобильные устройства.</p></div>
+        <div class="panel"><h3>03 / FEATURES</h3><p>Профиль, галерея, настройки оформления, контактный раздел и игра Snake.</p></div>
+        <div class="panel"><h3>04 / TECHNOLOGY</h3><p>HTML, CSS и JavaScript. Сайт работает прямо в браузере и не требует установки дополнительных приложений.</p></div>
+      </div>
+    </section>
 
-<div class="setting-card">
-<div class="setting-heading">VISUAL COLOR STUDIO</div>
-<div class="setting-info">Настрой каждый визуальный эффект отдельно. Выбери любой цвет.</div>
+    <section class="page" id="gallery">
+      <div class="section-head">
+        <h2 class="section-title">DATA <span>GALLERY</span></h2>
+        <div class="section-tag">COLLECTION / 03 ITEMS</div>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-card" onclick="openPopup('БОРЦЫ','Раздел коллекции. Здесь можно разместить информацию, фотографии и описания.')">
+          <div class="gallery-symbol">⚔</div>
+          <div><h3>БОРЦЫ</h3><p>Открыть коллекцию</p></div>
+        </div>
+        <div class="gallery-card" onclick="openPopup('ARCHIVE','Архив материалов PunyCloud. Добавляй сюда свои изображения и описания.')">
+          <div class="gallery-symbol">▤</div>
+          <div><h3>ARCHIVE</h3><p>Открыть архив</p></div>
+        </div>
+        <div class="gallery-card" onclick="openPopup('EXTRAS','Дополнительные материалы и будущие разделы сайта.')">
+          <div class="gallery-symbol">✧</div>
+          <div><h3>EXTRAS</h3><p>Дополнительный раздел</p></div>
+        </div>
+      </div>
+    </section>
 
-<div class="color-row">
-<label>CLICK EFFECT</label>
-<input class="color-input" type="color" id="clickColor" value="#aaa0c8" oninput="setVisualColor('click',this.value)">
-<span class="color-code" id="clickCode">#AAA0C8</span>
-</div>
-<div class="color-row">
-<label>CLICK WAVES</label>
-<input class="color-input" type="color" id="waveColor" value="#aaa0c8" oninput="setVisualColor('wave',this.value)">
-<span class="color-code" id="waveCode">#AAA0C8</span>
-</div>
-<div class="color-row">
-<label>PARTICLES</label>
-<input class="color-input" type="color" id="particleColor" value="#e4dcff" oninput="setVisualColor('particle',this.value)">
-<span class="color-code" id="particleCode">#E4DCFF</span>
-</div>
-<div class="color-row">
-<label>GLOW</label>
-<input class="color-input" type="color" id="glowColor" value="#8273b4" oninput="setVisualColor('glow',this.value)">
-<span class="color-code" id="glowCode">#8273B4</span>
-</div>
+    <section class="page" id="snake">
+      <div class="section-head">
+        <h2 class="section-title">SNAKE <span>GAME</span></h2>
+        <div class="section-tag">ARCADE MODULE / 001</div>
+      </div>
 
-<div class="setting-divider"></div>
-<div class="setting-heading">COLOR PRESETS</div>
-<div class="setting-info">Быстрые цветовые темы для всех эффектов.</div>
-<div class="color-presets">
-<button class="preset" style="background:#aaa0c8" onclick="applyPreset('#aaa0c8')" title="Purple"></button>
-<button class="preset" style="background:#48b9ff" onclick="applyPreset('#48b9ff')" title="Blue"></button>
-<button class="preset" style="background:#45e0b0" onclick="applyPreset('#45e0b0')" title="Mint"></button>
-<button class="preset" style="background:#ff5c91" onclick="applyPreset('#ff5c91')" title="Pink"></button>
-<button class="preset" style="background:#ffad55" onclick="applyPreset('#ffad55')" title="Orange"></button>
-<button class="preset" style="background:#e6e6e6" onclick="applyPreset('#e6e6e6')" title="White"></button>
-<button class="preset" style="background:#a5e64b" onclick="applyPreset('#a5e64b')" title="Lime"></button>
-<button class="preset" style="background:#bd75ff" onclick="applyPreset('#bd75ff')" title="Violet"></button>
-</div>
-<button class="color-action" onclick="resetVisualColors()">RESET VISUAL COLORS</button>
-</div>
+      <div class="game-layout">
+        <div class="game-board-wrap">
+          <div class="game-topline">
+            <div>GAME FIELD <span>/// 20 × 20</span></div>
+            <div>STATUS: <span id="gameStatus">READY</span></div>
+          </div>
+          <canvas id="snakeCanvas" width="600" height="600"></canvas>
+          <div class="game-message" id="gameMessage">НАЖМИ START, ЧТОБЫ НАЧАТЬ</div>
+        </div>
 
-<button class="menu-btn back" onclick="goHome()">← BACK TO MENU</button>
-</div>
-</section>
+        <div class="game-side">
+          <div class="score-box">
+            <div class="score-label">CURRENT SCORE</div>
+            <div class="score-number" id="score">0</div>
+          </div>
+          <div class="score-box">
+            <div class="score-label">BEST RECORD</div>
+            <div class="score-number" id="bestScore">0</div>
+          </div>
+          <div class="score-box">
+            <div class="score-label">CONTROL PANEL</div>
+            <div class="game-buttons" style="margin-top:14px">
+              <button class="btn primary" onclick="startGame()">START</button>
+              <button class="btn cyan" onclick="pauseGame()">PAUSE</button>
+              <button class="btn danger" onclick="resetGame()">RESET</button>
+            </div>
+            <div class="game-controls">
+              <button class="dpad up" onclick="changeDirection(0,-1)">W ▲</button>
+              <button class="dpad left" onclick="changeDirection(-1,0)">A ◀</button>
+              <button class="dpad down" onclick="changeDirection(0,1)">S ▼</button>
+              <button class="dpad right" onclick="changeDirection(1,0)">D ▶</button>
+            </div>
+          </div>
+          <div class="score-box">
+            <div class="score-label">KEYBOARD CONTROL</div>
+            <p class="key-hint" style="margin-top:12px">
+              <b>W</b> — вверх<br>
+              <b>A</b> — влево<br>
+              <b>S</b> — вниз<br>
+              <b>D</b> — вправо<br>
+              Также работают стрелки клавиатуры.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="page" id="profile">
-<div class="page-content">
-<div class="page-title">PROFILE</div>
-<div class="page-description">PERSONAL INFORMATION</div>
-<div class="profile-card">
-<div class="profile-icon">P</div>
-<div class="profile-name">PUNYCLOUD</div>
-<div class="profile-role">PERSONAL ASSISTANT</div>
-<div class="profile-divider"></div>
-<div class="creator-label">PROJECT CREATOR</div>
-<div class="creator-name">Евгений<br>Мастурбаторная пушка</div>
-<div class="profile-version">PUNYCLOUD SYSTEM · 2026</div>
-</div>
-<button class="menu-btn back" onclick="goHome()">← BACK TO MENU</button>
-</div>
-</section>
-
-<section class="page" id="gallery">
-<div class="page-content">
-<div class="page-title">GALLERY</div>
-<div class="page-description">PERSONAL COLLECTION · 09 ITEMS</div>
-<div class="gallery-grid">
-<div class="person-card" onclick="openPerson('НАДЯ','01')"><div class="person-number">01 / ARCHIVE</div><div class="person-name">НАДЯ</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('ОЛЯ','02')"><div class="person-number">02 / ARCHIVE</div><div class="person-name">ОЛЯ</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('МАКСИМ','03')"><div class="person-number">03 / ARCHIVE</div><div class="person-name">МАКСИМ</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('СОУС','04')"><div class="person-number">04 / ARCHIVE</div><div class="person-name">СОУС</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('МИЛАНА','05')"><div class="person-number">05 / ARCHIVE</div><div class="person-name">МИЛАНА</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('ПОЛИНА','06')"><div class="person-number">06 / ARCHIVE</div><div class="person-name">ПОЛИНА</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('СОНЯ','07')"><div class="person-number">07 / ARCHIVE</div><div class="person-name">СОНЯ</div><div class="person-line"></div></div>
-<div class="person-card" onclick="openPerson('КИРА','08')"><div class="person-number">08 / ARCHIVE</div><div class="person-name">КИРА</div><div class="person-line"></div></div>
-<div class="person-card creator-person" onclick="openPerson('ЖЕКА','09')"><div class="person-number">09 / CREATOR</div><div class="person-name">ЖЕКА</div><div class="person-line"></div></div>
-</div>
-<button class="menu-btn back" onclick="goHome()">← BACK TO MENU</button>
-</div>
-</section>
-
-<div class="fighters-popup" id="fightersPopup">
-<div class="fighters-top"><div class="fighters-title">БОРЦЫ</div><button class="fighters-close" onclick="hideFighters()">×</button></div>
-<div class="fighters-subtitle">SPECIAL FIGHTERS CLUB</div>
-<div class="fighter"><span class="fighter-number">01</span><span>ЖЕКА</span></div>
-<div class="fighter"><span class="fighter-number">02</span><span>МАКСИМ</span></div>
-<div class="fighter"><span class="fighter-number">03</span><span>СОУС</span></div>
-<div class="fighters-bottom">PUNYCLOUD FIGHTERS</div>
-</div>
-
-<div class="person-detail" id="personDetail">
-<div class="detail-box">
-<div class="detail-number" id="detailNumber">01 / ARCHIVE</div>
-<div class="detail-name" id="detailName">НАДЯ</div>
-<div class="profile-divider"></div>
-<div class="detail-description" id="detailDescription"></div>
-<div class="profile-version">PUNYCLOUD COLLECTION</div>
-<button class="menu-btn back" onclick="closePerson()">CLOSE</button>
-</div>
-</div>
-
-<section class="page" id="about">
-<div class="page-content">
-<div class="page-title">ABOUT</div>
-<div class="page-description">ABOUT THIS PROJECT</div>
-<button class="menu-btn" onclick="goHome()">← BACK</button>
-</div>
-</section>
-
-<script>
-/* STARS */
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
-let stars=[];
-function resize(){
-canvas.width=innerWidth;canvas.height=innerHeight;stars=[];
-for(let i=0;i<130;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*1.5+.2,alpha:Math.random(),speed:Math.random()*.008+.002});
-}
-function drawStars(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-stars.forEach(s=>{
-s.alpha+=s.speed;if(s.alpha>1||s.alpha<.15)s.speed*=-1;
-ctx.beginPath();ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
-ctx.fillStyle=`rgba(220,215,255,${s.alpha})`;ctx.fill();
-});
-requestAnimationFrame(drawStars);
-}
-window.addEventListener("resize",resize);resize();drawStars();
-
-/* CLICK EFFECTS */
-const effects=document.getElementById("effects");
-const fx=effects.getContext("2d");
-let waves=[],particles=[];
-function resizeEffects(){effects.width=innerWidth;effects.height=innerHeight}
-window.addEventListener("resize",resizeEffects);resizeEffects();
-
-function hexToRgb(hex){
-const value=hex.replace("#","");
-return {r:parseInt(value.substring(0,2),16),g:parseInt(value.substring(2,4),16),b:parseInt(value.substring(4,6),16)};
-}
-function rgba(hex,alpha){
-const c=hexToRgb(hex);
-return `rgba(${c.r},${c.g},${c.b},${alpha})`;
-}
-function createEffect(x,y){
-const colors=getVisualColors();
-waves.push({x,y,radius:2,alpha:.7,width:1.5,color:colors.wave});
-for(let i=0;i<9;i++){
-const angle=Math.random()*Math.PI*2,speed=1+Math.random()*2;
-particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,size:Math.random()*2+1,color:colors.particle});
-}
-}
-function drawEffects(){
-fx.clearRect(0,0,effects.width,effects.height);
-waves.forEach(w=>{
-w.radius+=2.1;w.alpha-=.012;
-fx.beginPath();fx.arc(w.x,w.y,w.radius,0,Math.PI*2);
-fx.strokeStyle=rgba(w.color,w.alpha);fx.lineWidth=w.width;fx.stroke();
-});
-waves=waves.filter(w=>w.alpha>0);
-particles.forEach(p=>{
-p.x+=p.vx;p.y+=p.vy;p.vx*=.98;p.vy*=.98;p.life-=.018;
-fx.beginPath();fx.arc(p.x,p.y,p.size,0,Math.PI*2);
-fx.fillStyle=rgba(p.color,p.life);fx.fill();
-});
-particles=particles.filter(p=>p.life>0);
-requestAnimationFrame(drawEffects);
-}
-drawEffects();
-document.addEventListener("pointerdown",e=>{
-if(e.pointerType==="mouse"&&e.button!==0)return;
-createEffect(e.clientX,e.clientY);
-});
-
-/* CONTACT */
-function openContact(){document.getElementById("contactOverlay").classList.add("active")}
-function closeContact(){document.getElementById("contactOverlay").classList.remove("active")}
-function overlayClose(event){if(event.target.id==="contactOverlay")closeContact()}
-
-/* NAVIGATION */
-let fighterTimer=null;
-function openPage(name){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById(name).classList.add("active");
-if(name==="gallery")showFighters();else hideFighters();
-}
-function goHome(){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-closePerson();hideFighters();
-}
-function showFighters(){
-const popup=document.getElementById("fightersPopup");
-clearTimeout(fighterTimer);popup.classList.remove("show");
-setTimeout(()=>{
-if(document.getElementById("gallery").classList.contains("active")){
-popup.classList.add("show");
-fighterTimer=setTimeout(hideFighters,5500);
-}
-},100);
-}
-function hideFighters(){
-document.getElementById("fightersPopup").classList.remove("show");
-clearTimeout(fighterTimer);
-}
-
-/* GALLERY */
-const descriptions={
-"НАДЯ":"PERSONAL ARCHIVE · CLASSIFIED",
-"ОЛЯ":"PERSONAL ARCHIVE · CLASSIFIED",
-"МАКСИМ":"БОРЕЦ. УЧАСТНИК SPECIAL FIGHTERS CLUB.",
-"СОУС":"Любит обмазывать всё соусом для бургеров.",
-"МИЛАНА":"PERSONAL ARCHIVE · CLASSIFIED",
-"ПОЛИНА":"PERSONAL ARCHIVE · CLASSIFIED",
-"СОНЯ":"Когда рядом — слышно землетрясение.",
-"КИРА":"Кира, ты должна поцеловать Соуса.",
-"ЖЕКА":"СОЗДАТЕЛЬ САЙТА PUNYCLOUD. ГЛАВНЫЙ АРХИТЕКТОР ЭТОГО МИРА."
-};
-function openPerson(name,number){
-document.getElementById("detailName").textContent=name;
-document.getElementById("detailNumber").textContent=number+" / ARCHIVE";
-document.getElementById("detailDescription").textContent=descriptions[name]||"PERSONAL ARCHIVE";
-document.getElementById("personDetail").classList.add("active");
-}
-function closePerson(){document.getElementById("personDetail").classList.remove("active")}
-
-/* SETTINGS */
-let effectEnabled=true,selectedValue=0;
-const defaults={click:"#aaa0c8",wave:"#aaa0c8",particle:"#e4dcff",glow:"#8273b4"};
-let visualColors={...defaults};
-
-function getVisualColors(){return visualColors}
-function getColor(value){
-const start=[8,8,13],end=[39,39,46],t=value/100;
-return start.map((v,i)=>Math.round(v+(end[i]-v)*t));
-}
-function changeColor(value){
-selectedValue=Number(value);
-const [r,g,b]=getColor(selectedValue);
-const color=`rgb(${r},${g},${b})`;
-document.body.style.background=effectEnabled?color:"#08080d";
-document.getElementById("preview").style.background=color;
-}
-function toggleEffect(){
-effectEnabled=!effectEnabled;
-document.getElementById("effectToggle").classList.toggle("enabled",effectEnabled);
-document.getElementById("effectOn").classList.toggle("active",effectEnabled);
-document.getElementById("effectOff").classList.toggle("active",!effectEnabled);
-changeColor(selectedValue);
-}
-function saveVisualColors(){
-try{localStorage.setItem("punycloud_visual_colors",JSON.stringify(visualColors))}catch(e){}
-}
-function updateVisualUI(){
-Object.keys(visualColors).forEach(key=>{
-const input=document.getElementById(key+"Color");
-const code=document.getElementById(key+"Code");
-if(input)input.value=visualColors[key];
-if(code)code.textContent=visualColors[key].toUpperCase();
-});
-document.documentElement.style.setProperty("--click",visualColors.click);
-document.documentElement.style.setProperty("--wave",visualColors.wave);
-document.documentElement.style.setProperty("--particle",visualColors.particle);
-document.documentElement.style.setProperty("--glow",visualColors.glow);
-document.documentElement.style.setProperty("--accent",visualColors.click);
-document.querySelectorAll(".preset").forEach(btn=>{
-btn.classList.toggle("active",btn.getAttribute("onclick")?.includes(visualColors.click));
-});
-}
-function setVisualColor(type,color){
-if(!defaults[type])return;
-visualColors[type]=color.toLowerCase();
-updateVisualUI();
-saveVisualColors();
-}
-function applyPreset(color){
-visualColors.click=color;
-visualColors.wave=color;
-visualColors.particle=color;
-visualColors.glow=color;
-updateVisualUI();
-saveVisualColors();
-}
-function resetVisualColors(){
-visualColors={...defaults};
-updateVisualUI();
-saveVisualColors();
-}
-function loadVisualColors(){
-try{
-const saved=JSON.parse(localStorage.getItem("punycloud_visual_colors"));
-if(saved){
-Object.keys(defaults).forEach(key=>{
-if(typeof saved[key]==="string"&&/^#[0-9a-fA-F]{6}$/.test(saved[key]))visualColors[key]=saved[key];
-});
-}
-}catch(e){}
-updateVisualUI();
-}
-loadVisualColors();
-
-/* ESCAPE */
-document.addEventListener("keydown",e=>{
-if(e.key==="Escape"){closeContact();closePerson()}
-});
-
-/* INTRO */
-setTimeout(()=>document.body.classList.add("loaded"),4000);
-</script>
-</body>
-</html>
-
+    <section class="page" id="settings">
+      <div class="section-head">
+        <h2 class="section-title"
