@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,237 +6,94 @@
 <title>LULU ARCHIVE</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#050509;color:#f5f1ff;font-family:Arial,sans-serif;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(110px);opacity:.2;pointer-events:none;z-index:0}
+body:before{background:#7826ff;top:-170px;left:-140px}
+body:after{background:#073bff;right:-180px;bottom:-190px}
 
-body {
-    min-height: 100vh;
-    background: #05050b;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
+#particles,#comets{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#particles{z-index:0}
+#comets{z-index:1}
 
-#particles, #comets {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
+main{position:relative;z-index:2;max-width:1100px;margin:auto;padding:38px 20px 24px}
+header{text-align:center;margin:10px 0 34px}
+h1{font-size:clamp(34px,7vw,58px);letter-spacing:5px;margin:0;text-shadow:0 0 12px #9b55ff,0 0 34px #7025ff}
+.subtitle{color:#a99bbd;letter-spacing:3px;font-size:11px;margin-top:10px}
 
-#particles {
-    z-index: 0;
-}
+.search-wrap{max-width:520px;margin:0 auto 28px}
+.search{width:100%;padding:15px 18px;border-radius:14px;border:1px solid #56317c;background:#100d19;color:white;font-size:15px;outline:none}
+.search:focus{border-color:#b06aff;box-shadow:0 0 20px #8a35ff55}
 
-#comets {
-    z-index: 1;
-}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.character{position:relative;min-height:245px;padding:22px;border:1px solid #59318a;border-radius:19px;background:linear-gradient(145deg,#171020,#09080f 75%);overflow:hidden;cursor:pointer;transition:.25s;box-shadow:0 8px 30px #0008}
+.character:hover{transform:translateY(-6px);box-shadow:0 10px 35px #802cff44}
+.character h2{position:relative;z-index:2;font-size:19px;line-height:1.3;margin:0 0 13px;text-shadow:0 2px 8px #000}
+.character p{position:relative;z-index:2;color:#d1c7df;line-height:1.5;font-size:14px;margin:0 0 20px}
+.tag{position:relative;z-index:2;display:inline-block;padding:7px 10px;border-radius:20px;background:#6b2bb833;border:1px solid #a45bdb;color:#e6caff;font-size:10px;letter-spacing:1px}
 
-.glow {
-    position: fixed;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    filter: blur(110px);
-    opacity: .22;
-    pointer-events: none;
-    z-index: 0;
+/* Максим — красно-чёрный стиль */
+.character.maxim{
+border:1px solid #c33a50;
+background:linear-gradient(145deg,#350b16,#10070c 75%);
+box-shadow:0 0 20px #c3224433;
 }
-
-.glow.one {
-    background: #712cff;
-    top: 5%;
-    left: -150px;
+.character.maxim:before{
+content:"🦾";
+position:absolute;
+right:15px;
+top:30px;
+font-size:85px;
+opacity:.22;
+filter:drop-shadow(0 0 15px red);
 }
+.character.maxim h2{color:#ff8295;text-shadow:0 0 12px #ff244c}
+.character.maxim .tag{border-color:#e34a62;color:#ffc1cb;background:#68132666}
 
-.glow.two {
-    background: #00c8ff;
-    right: -150px;
-    bottom: 5%;
-}
+/* Надя — алмазы */
+.character.nadya{border:1px solid #42d9ff;background:linear-gradient(145deg,#092c48,#07101e);box-shadow:0 0 18px #16cfff33}
+.character.nadya:before{content:"💎";position:absolute;right:12px;top:20px;font-size:85px;opacity:.25;filter:drop-shadow(0 0 15px #5ce5ff)}
+.character.nadya:after{content:"💎 ✧ 💎";position:absolute;right:12px;bottom:12px;font-size:22px;letter-spacing:8px;color:#8cecff;opacity:.7}
+.character.nadya h2{color:#8feaff;text-shadow:0 0 12px #00cfff}
+.character.nadya .tag{border-color:#31c9ef;color:#b9f5ff;background:#12628a66}
 
-main {
-    position: relative;
-    z-index: 2;
-    width: min(1100px, 92%);
-    margin: auto;
-    padding: 35px 0 50px;
-}
+/* Оля — золото */
+.character.olya{border:1px solid #e6b82f;background:linear-gradient(145deg,#49330b,#171006);box-shadow:0 0 20px #e8b72f44}
+.character.olya:before{content:"👑";position:absolute;right:12px;top:15px;font-size:80px;opacity:.3;filter:drop-shadow(0 0 15px gold)}
+.character.olya:after{content:"✦ ✨ ✦";position:absolute;right:15px;bottom:13px;font-size:24px;color:#ffd84d;opacity:.8}
+.character.olya h2{color:#ffdf72;text-shadow:0 0 12px #ffb700}
+.character.olya .tag{border-color:#e6bd40;color:#ffe89a;background:#9b6b1c55}
 
-header {
-    text-align: center;
-    margin-bottom: 35px;
-}
+/* Состав архива */
+.main-persons{position:fixed;z-index:5;top:15px;right:15px;width:145px;padding:10px;border:1px solid #7440a5;border-radius:13px;background:#100b19ed;box-shadow:0 0 20px #7e31bb44;backdrop-filter:blur(8px);font-size:11px}
+.persons-drag{font-weight:bold;color:#d9b5ff;text-align:center;padding:4px 2px 9px;margin-bottom:7px;border-bottom:1px solid #56336d;cursor:move;touch-action:none;user-select:none}
+.persons-list{line-height:1.65;color:#d7cce4}
+.persons-list b{color:white}
 
-header h1 {
-    font-size: clamp(30px, 7vw, 55px);
-    letter-spacing: 5px;
-    color: #fff;
-    text-shadow: 0 0 15px #8d43ff, 0 0 35px #6524ff;
-}
+/* Окно досье */
+#details{display:none;position:fixed;inset:0;z-index:10;background:#000b;backdrop-filter:blur(7px);padding:18px;overflow:auto;align-items:center;justify-content:center}
+.detail-box{position:relative;width:min(600px,100%);max-height:90vh;overflow:auto;padding:27px;border:1px solid #8d4bc1;border-radius:20px;background:linear-gradient(145deg,#1a1025,#09080f);box-shadow:0 0 45px #7929bd55}
+.detail-box h2{margin:0 40px 13px 0;color:#e7c7ff}
+.detail-desc{color:#d0c4dc;line-height:1.6}
+.close{position:absolute;right:15px;top:13px;border:1px solid #75429a;border-radius:10px;background:#25152f;color:white;padding:8px 12px;font-size:18px;cursor:pointer}
+.stat{margin:17px 0}
+.stat-head{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:7px;color:#e6d8f0}
+.bar{height:9px;border-radius:20px;background:#30243b;overflow:hidden}
+.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#7627bd,#d58cff);box-shadow:0 0 12px #a84cff}
+.detail-maxim{border-color:#c33a50}
+.detail-maxim .fill{background:linear-gradient(90deg,#8b142d,#ff657b)}
+.detail-nadya{border-color:#42d9ff}
+.detail-nadya .fill{background:linear-gradient(90deg,#008dce,#8cecff)}
+.detail-olya{border-color:#e6b82f}
+.detail-olya .fill{background:linear-gradient(90deg,#b47b08,#ffe36a)}
 
-header p {
-    color: #9d9db5;
-    margin-top: 12px;
-    letter-spacing: 3px;
-    font-size: 12px;
-}
+footer{text-align:center;color:#6f627d;font-size:11px;letter-spacing:2px;padding:38px 0 12px}
 
-.search {
-    display: block;
-    width: 100%;
-    max-width: 450px;
-    margin: 0 auto 30px;
-    padding: 15px 20px;
-    border: 1px solid #573b88;
-    border-radius: 14px;
-    background: #11101cdd;
-    color: white;
-    outline: none;
-    font-size: 15px;
-    box-shadow: 0 0 20px #602cff22;
-}
-
-.search:focus {
-    border-color: #a56aff;
-    box-shadow: 0 0 20px #873dff55;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
-}
-
-.character {
-    position: relative;
-    overflow: hidden;
-    padding: 22px;
-    min-height: 175px;
-    background: linear-gradient(145deg, #171528ee, #0b0b14ee);
-    border: 1px solid #40305f;
-    border-radius: 18px;
-    cursor: pointer;
-    transition: .25s;
-}
-
-.character:hover {
-    transform: translateY(-6px);
-    border-color: #a46aff;
-    box-shadow: 0 0 25px #813bff44;
-}
-
-.character h2 {
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
-.character p {
-    color: #aaa8c0;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.tag {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 6px 10px;
-    border-radius: 20px;
-    background: #823cff22;
-    color: #c5a3ff;
-    font-size: 11px;
-}
-
-.details {
-    display: none;
-    margin-top: 25px;
-    padding: 25px;
-    background: #11101cee;
-    border: 1px solid #7544b9;
-    border-radius: 18px;
-    box-shadow: 0 0 30px #742dff22;
-    animation: appear .3s ease;
-}
-
-@keyframes appear {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.details h2 {
-    font-size: 25px;
-    margin-bottom: 12px;
-    color: #d7baff;
-}
-
-.description {
-    color: #b8b5ca;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-.stat {
-    margin: 17px 0;
-}
-
-.stat-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 8px;
-    font-size: 13px;
-}
-
-.stat-top span:last-child {
-    color: #c59cff;
-}
-
-.bar {
-    height: 8px;
-    background: #29243b;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.fill {
-    height: 100%;
-    width: 0;
-    border-radius: 20px;
-    background: linear-gradient(90deg, #702cff, #38dfff);
-    box-shadow: 0 0 12px #823cff;
-    transition: width 1s ease;
-}
-
-.close {
-    margin-top: 20px;
-    padding: 12px 20px;
-    background: #702cff33;
-    color: white;
-    border: 1px solid #8750d8;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.close:hover {
-    background: #702cff77;
-}
-
-footer {
-    text-align: center;
-    color: #65617a;
-    font-size: 11px;
-    letter-spacing: 3px;
-    margin-top: 45px;
-}
-
-@media(max-width: 500px) {
-    main { padding-top: 25px; }
-    .cards { grid-template-columns: 1fr; }
-    .character { min-height: 145px; }
+@media(max-width:600px){
+main{padding:85px 14px 20px}
+.main-persons{top:10px;right:10px;width:135px}
+.cards{grid-template-columns:1fr}
+.character{min-height:205px}
 }
 </style>
 </head>
@@ -247,307 +103,245 @@ footer {
 <canvas id="particles"></canvas>
 <canvas id="comets"></canvas>
 
-<div class="glow one"></div>
-<div class="glow two"></div>
+<div class="main-persons" id="persons">
+<div class="persons-drag" id="drag">✥ СОСТАВ АРХИВА</div>
+<div class="persons-list">
+<b>ШАВКА</b> • Соня<br>
+<b>ЧУРКА</b> • Кира<br>
+<b>БОРЦЫ</b> • Максим, Женя<br>
+<b>БЫВШИЕ БОРЦЫ</b> • Соус
+</div>
+</div>
 
 <main>
-    <header>
-        <h1>LULU ARCHIVE</h1>
-        <p>СЕКРЕТНЫЙ АРХИВ ОБЪЕКТОВ</p>
-    </header>
+<header>
+<h1>LULU ARCHIVE</h1>
+<div class="subtitle">СЕКРЕТНЫЙ АРХИВ ОБЪЕКТОВ</div>
+</header>
 
-    <input
-        class="search"
-        id="search"
-        type="text"
-        placeholder="Поиск персонажа..."
-        oninput="searchCharacters()"
-    >
+<div class="search-wrap">
+<input class="search" id="search" placeholder="Поиск персонажа..." autocomplete="off">
+</div>
 
-    <div class="cards" id="cards"></div>
-
-    <section class="details" id="details">
-        <h2 id="detailName"></h2>
-        <p class="description" id="detailDesc"></p>
-        <div id="stats"></div>
-        <button class="close" onclick="closeMenu()">ЗАКРЫТЬ</button>
-    </section>
-
-    <footer>LULU ARCHIVE SYSTEM // VERSION 3.0</footer>
+<section class="cards" id="cards"></section>
+<footer>LULU ARCHIVE • VERSION 3.2</footer>
 </main>
 
+<div id="details">
+<div class="detail-box" id="detailBox">
+<button class="close" id="close">✕</button>
+<div id="detailContent"></div>
+</div>
+</div>
+
 <script>
-const characters = [
-    {
-        id: 1,
-        name: "👹 СОНЯ — ТЯЖЁЛЫЙ ТАНК",
-        short: "Самый опасный объект архива.",
-        desc: "Самый опасный объект как задавит масой ахуеть можно а так норм.",
-        stats: [
-            ["Опасность", 10],
-            ["Танк", 200],
-            ["Сила подрочить", 1000],
-            ["Страх", 100],
-            ["Скорость", 3]
-        ]
-    },
-    {
-        id: 2,
-        name: "🦊 КИРА — БЫСТРЫЙ ОБЪЕКТ",
-        short: "Очень быстрая и ловкая.",
-        desc: "Очень быстрая. Умеет дрочить со скоростью звука и неожиданно появляться.",
-        stats: [
-            ["Опасность", 7],
-            ["Скорость", 95],
-            ["Ловкость рук для дрочки", 100],
-            ["Защита", 45]
-        ]
-    },
-    {
-        id: 3,
-        name: "🦾 МАКСИМ — БОРЕЦ",
-        short: "Мощный защитник.",
-        desc: "Мощный защитник. Практически не отступает ТОЛЬКО КОГДА ДУШАТ.",
-        stats: [
-            ["Опасность", 8],
-            ["Сила посасати", 150],
-            ["Броня", 0, "нету"],
-            ["Скорость", 35]
-        ]
-    },
-    {
-        id: 4,
-        name: "🧪 СОУС — НЕИЗВЕСТНЫЙ",
-        short: "Загадочный объект.",
-        desc: "Загадочный объект. Его способности жестко одеваться в леопардовую кофту.",
-        stats: [
-            ["Опасность", 9],
-            ["Секретность", 99],
-            ["Интеллект", 100],
-            ["Хаос", 88]
-        ]
-    }
+const characters=[
+{
+id:'sonya',
+name:'👹 СОНЯ — ТЯЖЁЛЫЙ ТАНК',
+short:'Самый опасный объект архива.',
+desc:'Самый опасный объект как задавит масой ахуеть можно а так норм.',
+stats:[['Опасность',10],['Танк',200],['Сила подрочить',1000],['Страх',100],['Скорость',3]]
+},
+{
+id:'kira',
+name:'🦊 КИРА — БЫСТРЫЙ ОБЪЕКТ',
+short:'Очень быстрая и ловкая.',
+desc:'Очень быстрая. Умеет дрочить со скоростью звука и неожиданно появляться.',
+stats:[['Опасность',7],['Скорость',95],['Ловкость рук для дрочки',100],['Защита',45]]
+},
+{
+id:'maxim',
+name:'🦾 МАКСИМ — БОРЕЦ',
+short:'Мощный защитник.',
+desc:'Мощный защитник. Практически не отступает ТОЛЬКО КОГДА ДУШАТ.',
+stats:[['Опасность',8],['Сила посасати',150],['Броня',0,'нету'],['Скорость',35]]
+},
+{
+id:'sous',
+name:'🧪 СОУС — НЕИЗВЕСТНЫЙ',
+short:'Загадочный объект.',
+desc:'Загадочный объект. Его способности — жёстко одеваться в леопардовую кофту.',
+stats:[['Опасность',9],['Секретность',99],['Интеллект',100],['Хаос',88]]
+},
+{
+id:'nadya',
+name:'💎 НАДЯ — КОРОЛЕВА',
+short:'Самая шикарная персона архива.',
+theme:'nadya',
+desc:'Надя — королева архива. Её шикарность не нуждается в доказательствах. Вокруг неё сияют алмазы, а её появление превращает обычный день в королевское событие.',
+stats:[['Королевский статус',100],['Шикарность',100],['Красота',100],['Харизма',100],['Блеск',100]]
+},
+{
+id:'olya',
+name:'👑 ОЛЯ — ДЕВУШКА МАКСИМА',
+short:'Золотая персона архива.',
+theme:'olya',
+desc:'Оля — девушка Максима. Особенная, милая и харизматичная. У неё золотое сердце, сильный характер и королевская энергия. Максим точно знает, кто здесь главная!',
+stats:[['Золотое сердце',100],['Харизма',95],['Доброта',100],['Характер',100],['Влияние на Максима',100]]
+}
 ];
 
-const cards = document.getElementById("cards");
+const cards=document.getElementById('cards');
 
-function renderCards(list = characters) {
-    cards.innerHTML = "";
-
-    list.forEach(character => {
-        const card = document.createElement("div");
-        card.className = "character";
-
-        const title = document.createElement("h2");
-        title.textContent = character.name;
-
-        const description = document.createElement("p");
-        description.textContent = character.short;
-
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.textContent = "ОТКРЫТЬ ДОСЬЕ";
-
-        card.append(title, description, tag);
-        card.onclick = () => showCharacter(character.id);
-
-        cards.appendChild(card);
-    });
+function renderCards(list=characters){
+cards.innerHTML='';
+if(!list.length){
+cards.innerHTML='<p style="color:#a99bbd;text-align:center;grid-column:1/-1">Ничего не найдено</p>';
+return;
+}
+list.forEach(c=>{
+const el=document.createElement('article');
+el.className='character '+(c.id==='maxim'?'maxim':(c.theme||''));
+el.innerHTML=`<h2>${c.name}</h2><p>${c.short}</p><span class="tag">ОТКРЫТЬ ДОСЬЕ</span>`;
+el.addEventListener('click',()=>showCharacter(c.id));
+cards.appendChild(el);
+});
 }
 
-function showCharacter(id) {
-    const character = characters.find(item => item.id === id);
-    if (!character) return;
+function showCharacter(id){
+const c=characters.find(x=>x.id===id);
+if(!c)return;
 
-    document.getElementById("detailName").textContent = character.name;
-    document.getElementById("detailDesc").textContent = character.desc;
+const box=document.getElementById('detailBox');
+box.classList.remove('detail-maxim','detail-nadya','detail-olya');
 
-    const stats = document.getElementById("stats");
-    stats.innerHTML = "";
+if(id==='maxim')box.classList.add('detail-maxim');
+if(id==='nadya')box.classList.add('detail-nadya');
+if(id==='olya')box.classList.add('detail-olya');
 
-    character.stats.forEach(stat => {
-        const value = stat[1];
-        const row = document.createElement("div");
-        row.className = "stat";
+const stats=c.stats.map(([label,value,custom])=>{
+const width=Math.max(0,Math.min(100,Number(value)));
+return `<div class="stat">
+<div class="stat-head"><span>${label}</span><b>${custom||value}</b></div>
+<div class="bar"><div class="fill" style="width:${width}%"></div></div>
+</div>`;
+}).join('');
 
-        const top = document.createElement("div");
-        top.className = "stat-top";
+document.getElementById('detailContent').innerHTML=`
+<h2>${c.name}</h2>
+<p class="detail-desc">${c.desc}</p>
+<h3 style="color:#cba4ee;font-size:13px;letter-spacing:2px">ХАРАКТЕРИСТИКИ</h3>
+${stats}`;
 
-        const label = document.createElement("span");
-        label.textContent = stat[0];
-
-        const number = document.createElement("span");
-        number.textContent = stat[2] || value;
-
-        const bar = document.createElement("div");
-        bar.className = "bar";
-
-        const fill = document.createElement("div");
-        fill.className = "fill";
-        fill.style.width = "0%";
-
-        bar.appendChild(fill);
-        top.append(label, number);
-        row.append(top, bar);
-        stats.appendChild(row);
-
-        requestAnimationFrame(() => {
-            fill.style.width = Math.min(Math.max(value, 0), 100) + "%";
-        });
-    });
-
-    const panel = document.getElementById("details");
-    panel.style.display = "block";
-    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+document.getElementById('details').style.display='flex';
 }
 
-function closeMenu() {
-    document.getElementById("details").style.display = "none";
-}
+document.getElementById('close').onclick=()=>{
+document.getElementById('details').style.display='none';
+};
 
-function searchCharacters() {
-    const query = document.getElementById("search").value.toLowerCase();
+document.getElementById('details').addEventListener('click',e=>{
+if(e.target.id==='details')e.currentTarget.style.display='none';
+});
 
-    renderCards(characters.filter(character =>
-        character.name.toLowerCase().includes(query) ||
-        character.short.toLowerCase().includes(query) ||
-        character.desc.toLowerCase().includes(query)
-    ));
-}
+document.addEventListener('keydown',e=>{
+if(e.key==='Escape')document.getElementById('details').style.display='none';
+});
+
+document.getElementById('search').addEventListener('input',e=>{
+const q=e.target.value.toLowerCase().trim();
+renderCards(characters.filter(c=>(c.name+' '+c.short+' '+c.desc).toLowerCase().includes(q)));
+});
 
 renderCards();
 
+/* Перетаскивание состава архива */
+const panel=document.getElementById('persons');
+const handle=document.getElementById('drag');
+let dragging=false,dx=0,dy=0;
 
-// ФОН: СВЕТЯЩИЕСЯ ЧАСТИЦЫ
+handle.addEventListener('pointerdown',e=>{
+dragging=true;
+const r=panel.getBoundingClientRect();
+dx=e.clientX-r.left;
+dy=e.clientY-r.top;
+handle.setPointerCapture(e.pointerId);
+});
 
-const particleCanvas = document.getElementById("particles");
-const pctx = particleCanvas.getContext("2d");
+handle.addEventListener('pointermove',e=>{
+if(!dragging)return;
+panel.style.left=Math.max(0,Math.min(innerWidth-panel.offsetWidth,e.clientX-dx))+'px';
+panel.style.top=Math.max(0,Math.min(innerHeight-panel.offsetHeight,e.clientY-dy))+'px';
+panel.style.right='auto';
+});
 
-let particles = [];
+handle.addEventListener('pointerup',()=>dragging=false);
+handle.addEventListener('pointercancel',()=>dragging=false);
 
-function resizeParticleCanvas() {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    particleCanvas.width = innerWidth * dpr;
-    particleCanvas.height = innerHeight * dpr;
-    pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+/* Звёзды и кометы */
+const pc=document.getElementById('particles');
+const pctx=pc.getContext('2d');
+const cc=document.getElementById('comets');
+const cctx=cc.getContext('2d');
+
+let stars=[],comets=[];
+
+function resize(){
+pc.width=cc.width=innerWidth;
+pc.height=cc.height=innerHeight;
+
+stars=Array.from({length:65},()=>({
+x:Math.random()*pc.width,
+y:Math.random()*pc.height,
+r:Math.random()*1.6+.3,
+a:Math.random(),
+s:Math.random()*.012+.003
+}));
+
+comets=Array.from({length:7},()=>({
+x:Math.random()*cc.width,
+y:Math.random()*cc.height,
+v:Math.random()*3+2,
+len:Math.random()*75+45
+}));
 }
 
-function createParticle() {
-    return {
-        x: Math.random() * innerWidth,
-        y: Math.random() * innerHeight,
-        size: Math.random() * 2 + 0.5,
-        speed: Math.random() * 0.5 + 0.15,
-        alpha: Math.random() * 0.6 + 0.2
-    };
+addEventListener('resize',resize);
+resize();
+
+function animate(){
+pctx.clearRect(0,0,pc.width,pc.height);
+
+stars.forEach(s=>{
+s.a+=s.s;
+if(s.a>1||s.a<0)s.s*=-1;
+pctx.beginPath();
+pctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+pctx.fillStyle=`rgba(220,195,255,${Math.max(.15,s.a)})`;
+pctx.fill();
+});
+
+cctx.clearRect(0,0,cc.width,cc.height);
+
+comets.forEach(c=>{
+c.x+=c.v;
+c.y+=c.v*.35;
+
+const g=cctx.createLinearGradient(
+c.x-c.len,c.y-c.len*.35,c.x,c.y
+);
+
+g.addColorStop(0,'rgba(70,130,255,0)');
+g.addColorStop(1,'rgba(135,190,255,.8)');
+
+cctx.strokeStyle=g;
+cctx.lineWidth=2;
+cctx.beginPath();
+cctx.moveTo(c.x-c.len,c.y-c.len*.35);
+cctx.lineTo(c.x,c.y);
+cctx.stroke();
+
+if(c.x>cc.width+100||c.y>cc.height+100){
+c.x=-Math.random()*300;
+c.y=Math.random()*cc.height*.7;
+}
+});
+
+requestAnimationFrame(animate);
 }
 
-for (let i = 0; i < 65; i++) {
-    particles.push(createParticle());
-}
-
-function animateParticles() {
-    pctx.clearRect(0, 0, innerWidth, innerHeight);
-
-    particles.forEach(p => {
-        pctx.beginPath();
-        pctx.fillStyle = `rgba(150,190,255,${p.alpha})`;
-        pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        pctx.fill();
-
-        p.y -= p.speed;
-
-        if (p.y < 0) {
-            p.y = innerHeight;
-            p.x = Math.random() * innerWidth;
-        }
-    });
-
-    requestAnimationFrame(animateParticles);
-}
-
-
-// ФОН: ЛЕТЯЩИЕ КОМЕТЫ
-
-const cometCanvas = document.getElementById("comets");
-const cctx = cometCanvas.getContext("2d");
-
-let comets = [];
-
-function resizeCometCanvas() {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    cometCanvas.width = innerWidth * dpr;
-    cometCanvas.height = innerHeight * dpr;
-    cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-
-function createComet() {
-    return {
-        x: Math.random() * (innerWidth + 300),
-        y: Math.random() * (innerHeight * 0.7) - 100,
-        speed: Math.random() * 4 + 3,
-        length: Math.random() * 110 + 70,
-        size: Math.random() * 1.5 + 1,
-        alpha: Math.random() * 0.5 + 0.5
-    };
-}
-
-for (let i = 0; i < 7; i++) {
-    comets.push(createComet());
-}
-
-function animateComets() {
-    cctx.clearRect(0, 0, innerWidth, innerHeight);
-
-    comets.forEach((comet, index) => {
-        const tailX = comet.x + comet.length;
-        const tailY = comet.y - comet.length * 0.5;
-
-        const gradient = cctx.createLinearGradient(
-            comet.x, comet.y, tailX, tailY
-        );
-
-        gradient.addColorStop(0, `rgba(130,225,255,${comet.alpha})`);
-        gradient.addColorStop(1, "rgba(130,225,255,0)");
-
-        cctx.beginPath();
-        cctx.strokeStyle = gradient;
-        cctx.lineWidth = comet.size;
-        cctx.moveTo(comet.x, comet.y);
-        cctx.lineTo(tailX, tailY);
-        cctx.stroke();
-
-        cctx.beginPath();
-        cctx.fillStyle = `rgba(220,250,255,${comet.alpha})`;
-        cctx.shadowBlur = 18;
-        cctx.shadowColor = "#55ddff";
-        cctx.arc(comet.x, comet.y, comet.size * 1.5, 0, Math.PI * 2);
-        cctx.fill();
-        cctx.shadowBlur = 0;
-
-        comet.x -= comet.speed;
-        comet.y += comet.speed * 0.5;
-
-        if (comet.x < -200 || comet.y > innerHeight + 100) {
-            comets[index] = createComet();
-        }
-    });
-
-    requestAnimationFrame(animateComets);
-}
-
-function resizeAll() {
-    resizeParticleCanvas();
-    resizeCometCanvas();
-}
-
-addEventListener("resize", resizeAll);
-
-resizeAll();
-animateParticles();
-animateComets();
+animate();
 </script>
-
 </body>
- </html>
- 
+</html>
